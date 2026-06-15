@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #09090b; }
+::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+/* Utility Classes */
+.data-font { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
+
+/* Loader Transitions */
+.loader-overlay { transition: opacity 0.6s ease-out, visibility 0.6s; }
+.hidden-loader { opacity: 0; visibility: hidden; pointer-events: none; }
+
+/* Input Reset */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
