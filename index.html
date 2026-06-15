@@ -3,203 +3,508 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sparrow | Official Calculator</title>
+    <title>Sparrow | Agent Utility Terminal</title>
+    <!-- Fonts: Inter for UI, JetBrains Mono for Data -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        zinc: {
+                            850: '#18181b',
+                            950: '#09090b',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         body {
             background: radial-gradient(circle at 50% 50%, #18181b 0%, #09090b 100%);
             background-attachment: fixed;
-            overflow-x: hidden;
         }
-        body::before {
-            content: "";
+        /* Ambient Background Glow */
+        .ambient-glow {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+            background: 
+                radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 40%);
             z-index: -1;
             pointer-events: none;
         }
-        .loader-overlay { transition: opacity 0.5s ease-out, visibility 0.5s; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+        /* Loader Transitions */
+        .loader-overlay { transition: opacity 0.6s ease-out, visibility 0.6s; }
         .hidden-loader { opacity: 0; visibility: hidden; pointer-events: none; }
-        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+        /* Input Reset */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+        /* Utility Classes */
+        .glass-panel {
+            background: rgba(24, 24, 27, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(39, 39, 42, 1);
+        }
+        .data-font { font-feature-settings: "tnum"; font-variant-numeric: tabular-nums; }
     </style>
 </head>
-<body class="text-zinc-100 min-h-screen p-6 font-sans">
+<body class="text-zinc-100 min-h-screen p-4 md:p-8 font-sans antialiased selection:bg-emerald-500/30 selection:text-emerald-400">
 
     <div id="loader" class="fixed inset-0 z-[100] bg-zinc-950 flex flex-col items-center justify-center loader-overlay">
-        <div class="animate-pulse flex flex-col items-center">
-            <div class="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-            <p class="text-zinc-500 text-[10px] uppercase tracking-widest">Initializing Secure System...</p>
+        <div class="relative w-20 h-20">
+            <div class="absolute inset-0 border-t-4 border-emerald-500 rounded-full animate-spin"></div>
+            <div class="absolute inset-2 border-r-4 border-blue-500 rounded-full animate-spin" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
         </div>
+        <p class="mt-6 text-zinc-500 text-[10px] uppercase tracking-[0.3em] animate-pulse">Initializing Sparrow Link...</p>
     </div>
 
-    <header class="max-w-5xl mx-auto mb-8 border-b border-zinc-800 pb-6 flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-bold tracking-tighter text-emerald-400">Sparrow <span class="text-zinc-500 font-light text-xl">| Internal Agent Utility</span></h1>
-            <p class="text-xs text-zinc-500 uppercase tracking-widest mt-1">Authorized Tool Access Only • System Version 1.0.1</p>
+    <div class="ambient-glow"></div>
+
+    <header class="max-w-6xl mx-auto mb-10 border-b border-zinc-800 pb-6 flex flex-col md:flex-row items-center justify-between gap-4 animate-fade-in">
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-900 flex items-center justify-center shadow-lg shadow-emerald-900/20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold tracking-tight text-white">Sparrow <span class="text-zinc-600 font-light">| Internal Agent</span></h1>
+                <div class="flex items-center gap-2 mt-0.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <p class="text-[10px] uppercase tracking-widest text-zinc-500 font-medium">System Online • v1.0.4</p>
+                </div>
+            </div>
         </div>
-        <div class="text-right">
-            <span id="live-date-time" class="block text-xs font-mono text-zinc-400">Initializing...</span>
+        <div class="text-right bg-zinc-900/50 px-4 py-2 rounded-full border border-zinc-800">
+            <span id="live-date-time" class="text-xs font-mono text-zinc-400">Syncing...</span>
         </div>
     </header>
 
-    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+    <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-6 opacity-0 animate-fade-in" style="animation-delay: 0.2s;">
         
-        <div class="bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-2xl p-6 shadow-2xl space-y-6">
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                <span class="w-2 h-6 bg-emerald-400 rounded-full"></span> Sparrow Miles Calculator
-            </h2>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs uppercase text-zinc-400">Customer Spend (PHP)</label>
-                    <input type="number" id="spend-input" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <!-- MILES CALCULATOR -->
+        <div class="glass-panel rounded-2xl p-6 shadow-2xl flex flex-col h-full">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <span class="w-1.5 h-8 bg-emerald-500 rounded-full"></span>
+                    <h2 class="text-lg font-bold text-white">Sparrow Miles</h2>
                 </div>
-                <div>
-                    <label class="block text-xs uppercase text-zinc-400">Multiplier</label>
-                    <select id="multiplier-select" class="w-full bg-zinc-950 border border-zinc-700 rounded py-2 px-3 text-white">
-                        <option value="1">1x (Base)</option>
-                        <option value="2">2x (Preferred)</option>
-                        <option value="5">5x (Preferred)</option>
-                        <option value="10">10x (Max)</option>
-                        <option value="custom">Custom</option>
-                    </select>
-                    <input type="number" id="custom-multiplier" placeholder="Enter custom x" class="hidden mt-2 w-full bg-zinc-950 border border-emerald-500 rounded py-2 px-3 text-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <span class="px-2 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] uppercase font-bold rounded">Module A</span>
+            </div>
+            
+            <div class="space-y-5 flex-grow">
+                <div class="group">
+                    <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1 group-focus-within:text-emerald-400 transition-colors">Customer Spend (PHP)</label>
+                    <div class="relative">
+                        <span class="absolute left-3 top-2.5 text-zinc-500">₱</span>
+                        <input type="text" inputmode="decimal" id="spend-input" autocomplete="off" placeholder="0.00" 
+                            class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 pl-8 pr-4 text-white font-mono focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-700">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs uppercase text-zinc-400">Miles Earned</label>
-                    <input type="number" id="miles-input" readonly class="w-full bg-zinc-950/50 border border-emerald-500/30 rounded py-2 px-3 text-emerald-400 cursor-not-allowed">
+
+                <div class="group">
+                    <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1 group-focus-within:text-emerald-400 transition-colors">Multiplier Rate</label>
+                    <div class="grid grid-cols-[1fr_auto] gap-2">
+                        <select id="multiplier-select" class="bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 px-3 text-sm text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 appearance-none cursor-pointer hover:bg-zinc-900 transition-colors">
+                            <option value="1">1x (Base)</option>
+                            <option value="2">2x (Preferred)</option>
+                            <option value="5">5x (Elite)</option>
+                            <option value="10">10x (Max)</option>
+                            <option value="custom">Custom Multiplier</option>
+                        </select>
+                    </div>
+                    <!-- Hidden Custom Input -->
+                    <input type="number" id="custom-multiplier" placeholder="Enter Multiplier (e.g. 3)" class="hidden mt-2 w-full bg-zinc-950/50 border border-emerald-500/50 rounded-lg py-2 px-3 text-emerald-400 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 animate-fade-in">
+                </div>
+
+                <div class="bg-zinc-950/50 rounded-xl p-4 border border-zinc-800/50 mt-2">
+                    <label class="block text-[10px] uppercase tracking-wider text-zinc-600 mb-1">Miles Generated</label>
+                    <div class="flex items-baseline justify-between gap-4">
+                        <div class="relative w-full">
+                            <input type="text" id="miles-input" readonly 
+                                class="w-full bg-transparent border-none text-3xl font-mono font-bold text-emerald-400 focus:outline-none cursor-default data-font" value="0.00">
+                            <button onclick="copyToClipboard('miles-input')" class="absolute right-0 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-white transition-colors p-1" title="Copy">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-4 pt-4 border-t border-zinc-800">
-                <div><p class="text-[9px] uppercase text-zinc-500">Cash Value</p><p class="text-lg font-bold text-emerald-400">₱<span id="cash-value">0.00</span></p></div>
-                <div><p class="text-[9px] uppercase text-zinc-500">Est. Spend</p><p class="text-lg font-bold text-white">₱<span id="est-spend">0.00</span></p></div>
+
+            <div class="grid grid-cols-2 gap-4 pt-5 border-t border-zinc-800 mt-4">
+                <div class="bg-zinc-900/50 p-3 rounded-lg border border-zinc-800">
+                    <p class="text-[9px] uppercase text-zinc-500 mb-1">Est. Cash Value</p>
+                    <p class="text-sm font-bold text-zinc-300 data-font">₱<span id="cash-value">0.00</span></p>
+                </div>
+                <div class="bg-zinc-900/50 p-3 rounded-lg border border-zinc-800">
+                    <p class="text-[9px] uppercase text-zinc-500 mb-1">Processed Spend</p>
+                    <p class="text-sm font-bold text-zinc-300 data-font">₱<span id="est-spend">0.00</span></p>
+                </div>
             </div>
         </div>
 
-        <div class="bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-2xl p-6 shadow-2xl space-y-6">
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                <span class="w-2 h-6 bg-red-400 rounded-full"></span> Finance Charge Calculator
-            </h2>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs uppercase text-zinc-400">Loan Credit (PHP)</label>
-                    <input type="number" id="loan-credit" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-red-500">
+        <!-- FINANCE CHARGE CALCULATOR -->
+        <div class="glass-panel rounded-2xl p-6 shadow-2xl flex flex-col h-full">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <span class="w-1.5 h-8 bg-red-500 rounded-full"></span>
+                    <h2 class="text-lg font-bold text-white">Finance Charge</h2>
                 </div>
-                <div>
-                    <label class="block text-xs uppercase text-zinc-400">Partial Payment (PHP)</label>
-                    <input type="number" id="partial-payment" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-red-500">
+                <span class="px-2 py-1 bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] uppercase font-bold rounded">Module B</span>
+            </div>
+
+            <div class="space-y-5 flex-grow">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Loan Credit (PHP)</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-2.5 text-zinc-500">₱</span>
+                            <input type="text" inputmode="decimal" id="loan-credit" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 pl-8 pr-4 text-white font-mono focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-zinc-700">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Partial Payment (PHP)</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-2.5 text-zinc-500">₱</span>
+                            <input type="text" inputmode="decimal" id="partial-payment" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 pl-8 pr-4 text-white font-mono focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-zinc-700">
+                        </div>
+                    </div>
                 </div>
+
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs uppercase text-zinc-400">Loan Term (Days)</label>
-                        <input type="number" id="loan-term" value="30" class="w-full bg-zinc-950 border border-zinc-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-zinc-500">
+                        <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Loan Term (Days)</label>
+                        <input type="number" id="loan-term" value="30" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 px-3 text-white font-mono focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all">
                     </div>
                     <div>
-                        <label class="block text-xs uppercase text-zinc-400">Days Held</label>
-                        <input type="number" id="days-held" value="20" class="w-full bg-zinc-950 border border-zinc-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-zinc-500">
+                        <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Days Held</label>
+                        <input type="number" id="days-held" value="20" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 px-3 text-white font-mono focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all">
+                    </div>
+                </div>
+
+                <!-- Dynamic Breakdown -->
+                <div class="space-y-2">
+                    <div class="flex justify-between text-xs text-zinc-400">
+                        <span>Remaining Principal</span>
+                        <span class="font-mono text-zinc-200" id="fb-principal">₱0.00</span>
+                    </div>
+                    <div class="flex justify-between text-xs text-zinc-400">
+                        <span>Interest Accrued (3%)</span>
+                        <span class="font-mono text-zinc-200" id="fb-interest">₱0.00</span>
                     </div>
                 </div>
             </div>
-            <div class="pt-4 border-t border-zinc-800">
-                <p class="text-xs uppercase text-zinc-500">Total Due (Remaining + Charge)</p>
-                <p class="text-2xl font-bold text-red-400">₱<span id="finance-charge-result">0.00</span></p>
+
+            <div class="pt-5 border-t border-zinc-800 mt-4">
+                <label class="block text-[10px] uppercase tracking-wider text-red-500/80 mb-1">Total Payable Amount</label>
+                <div class="flex items-baseline gap-2 group cursor-pointer" onclick="copyToClipboard('finance-charge-result')">
+                    <p class="text-3xl font-mono font-bold text-white group-hover:text-red-400 transition-colors data-font">₱<span id="finance-charge-result">0.00</span></p>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-zinc-600 group-hover:text-zinc-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                </div>
             </div>
         </div>
 
-        <div class="bg-zinc-900/80 backdrop-blur-sm border border-zinc-800 rounded-2xl p-6 shadow-2xl space-y-6 md:col-span-2">
-            <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                <span class="w-2 h-6 bg-blue-500 rounded-full"></span> Lantern Rewards Calculator- BROKEN - 
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div>
-                    <label class="block text-xs uppercase text-zinc-400">Transaction Amount (PHP)</label>
-                    <input type="number" id="landers-spend" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <!-- LANTERN REWARDS CALCULATOR -->
+        <div class="glass-panel rounded-2xl p-6 shadow-2xl lg:col-span-2 flex flex-col md:flex-row gap-8">
+            <div class="md:w-1/2 space-y-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="w-1.5 h-8 bg-blue-500 rounded-full"></span>
+                        <h2 class="text-lg font-bold text-white">Lantern Rewards</h2>
+                    </div>
+                    <span class="px-2 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] uppercase font-bold rounded">Module C</span>
                 </div>
-                <div>
-                    <label class="block text-xs uppercase text-zinc-400">Total Monthly Spend (For Tier)</label>
-                    <input type="number" id="total-card-spend" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Transaction Amount</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-2.5 text-zinc-500">₱</span>
+                            <input type="text" inputmode="decimal" id="landers-spend" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 pl-8 pr-4 text-white font-mono focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder-zinc-700">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Monthly Total (Tier Check)</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-2.5 text-zinc-500">₱</span>
+                            <input type="text" inputmode="decimal" id="total-card-spend" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 pl-8 pr-4 text-white font-mono focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder-zinc-700">
+                        </div>
+                    </div>
                 </div>
+
                 <div>
-                    <label class="block text-xs uppercase text-zinc-400">Category</label>
-                    <select id="landers-category" class="w-full bg-zinc-950 border border-zinc-700 rounded py-2 px-3 text-white">
-                        <option value="everywhere">1% Everywhere</option>
-                        <option value="dining">2% Dining</option>
-                        <option value="landers">Lantern (3%-5%)</option>
+                    <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Purchase Category</label>
+                    <select id="landers-category" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 px-3 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 appearance-none hover:bg-zinc-900 transition-colors">
+                        <option value="everywhere">Everyday Spend (1%)</option>
+                        <option value="dining">Dining & Leisure (2%)</option>
+                        <option value="landers">Lantern Partners (3-5%)</option>
                     </select>
                 </div>
+
+                <!-- Tier Status Indicator -->
+                <div class="bg-zinc-950/50 p-4 rounded-lg border border-zinc-800 flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] uppercase text-zinc-500">Active Rate Tier</p>
+                        <p id="tier-display" class="text-sm font-bold text-white mt-1">Standard Base</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[10px] uppercase text-zinc-500">Multiplier</p>
+                        <p id="rate-display" class="text-2xl font-mono font-bold text-blue-400 mt-1">1.0%</p>
+                    </div>
+                </div>
             </div>
-            <div class="pt-4 border-t border-zinc-800">
-                <p class="text-xs uppercase text-zinc-500">Estimated Cashback</p>
-                <p class="text-2xl font-bold text-blue-400">₱<span id="landers-result">0.00</span></p>
+
+            <div class="md:w-1/2 bg-zinc-900/30 rounded-xl p-6 flex flex-col justify-center border border-dashed border-zinc-800">
+                <p class="text-xs uppercase tracking-widest text-zinc-500 mb-4">Estimated Cashback</p>
+                <div class="flex items-end justify-between">
+                    <p class="text-4xl md:text-5xl font-mono font-bold text-blue-400 tracking-tighter data-font group cursor-pointer" onclick="copyToClipboard('landers-result')">₱<span id="landers-result">0.00</span></p>
+                    <button onclick="copyToClipboard('landers-result')" class="mb-2 p-2 hover:bg-blue-500/20 rounded-lg transition-colors text-blue-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                    </button>
+                </div>
+                <div class="mt-4 pt-4 border-t border-zinc-800/50">
+                    <p class="text-[10px] text-zinc-500 leading-relaxed">
+                        *Lantern Partner rates increase based on Monthly Total Spend. 
+                        <span class="text-zinc-300 block mt-1">₱20k+ (4%) • ₱50k+ (5%)</span>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <footer class="max-w-5xl mx-auto mt-12 pt-8 border-t border-zinc-800/50 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-600">
-        <div class="flex items-center gap-2">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-            <p class="text-[10px] uppercase tracking-widest">Sparrow Operational Infrastructure</p>
+    </main>
+
+    <footer class="max-w-6xl mx-auto mt-12 pt-8 border-t border-zinc-800/50 flex flex-col md:flex-row justify-between items-center gap-6 text-zinc-600 animate-fade-in" style="animation-delay: 0.4s;">
+        <div class="flex items-center gap-3">
+            <div class="px-2 py-1 rounded border border-zinc-800 bg-zinc-950/50">
+                <p class="text-[9px] font-mono uppercase text-emerald-500">System Normal</p>
+            </div>
+            <p class="text-[10px] uppercase tracking-widest">Sparrow Infrastructure</p>
         </div>
         <div class="text-center md:text-right">
-            <p class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold mb-1">System Engineering Team</p>
-            <p class="text-xs font-mono">Ancel Claudio • Marcux Dimaapi • Marlon Ubaña</p>
+            <p class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold mb-1">Engineering Team</p>
+            <p class="text-xs font-medium text-zinc-400">Ancel Claudio • Marcux Dimaapi • Marlon Ubaña</p>
         </div>
     </footer>
 
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-zinc-800 border border-zinc-700 text-white px-4 py-2 rounded-full shadow-2xl flex items-center gap-2 opacity-0 transition-all duration-300 translate-y-4 pointer-events-none z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        <span class="text-xs font-medium">Value Copied</span>
+    </div>
+
     <script>
+        // --- UTILS ---
+        const formatCurrency = (num) => {
+            return new Intl.NumberFormat('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
+        };
+        
+        const parseCurrency = (str) => {
+            if(!str) return 0;
+            return parseFloat(str.replace(/[^0-9.-]+/g, "")) || 0;
+        };
+
+        // Format Input while typing (blur/focus strategy prevents cursor jumping issues)
+        const setupCurrencyInput = (id) => {
+            const el = document.getElementById(id);
+            
+            // Format on blur
+            el.addEventListener('blur', () => {
+                const val = parseCurrency(el.value);
+                if(val > 0) el.value = formatCurrency(val);
+                else el.value = "";
+            });
+            
+            // Clean on focus for easy editing
+            el.addEventListener('focus', () => {
+                const val = parseCurrency(el.value);
+                if(val > 0) el.value = val;
+            });
+
+            // Trigger calculation on input
+            el.addEventListener('input', () => {
+                // Dispatch custom event for specific calculator logic
+                el.dispatchEvent(new Event('calculate'));
+            });
+        };
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+            }, 2000);
+        }
+
+        window.copyToClipboard = (elementId) => {
+            const text = document.getElementById(elementId).innerText || document.getElementById(elementId).value;
+            navigator.clipboard.writeText(text).then(showToast);
+        };
+
+        // --- CLOCK ---
         function updateClock() {
             const now = new Date();
-            document.getElementById('live-date-time').textContent = now.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('live-date-time').textContent = now.toLocaleString('en-US', { 
+                month: 'short', day: 'numeric', year: 'numeric', 
+                hour: '2-digit', minute: '2-digit', second: '2-digit' 
+            });
         }
         setInterval(updateClock, 1000); updateClock();
 
+        // --- LOADER ---
         window.addEventListener('load', () => {
-            setTimeout(() => { document.getElementById('loader').classList.add('hidden-loader'); }, 2000);
+            setTimeout(() => { document.getElementById('loader').classList.add('hidden-loader'); }, 1200);
         });
 
+        // --- MILES CALCULATOR ---
         const spendInput = document.getElementById('spend-input');
         const multSelect = document.getElementById('multiplier-select');
         const customMult = document.getElementById('custom-multiplier');
         const milesInput = document.getElementById('miles-input');
-        
+
+        setupCurrencyInput('spend-input');
+
         function calculateMiles() {
-            const val = parseFloat(spendInput.value) || 0;
-            const mult = multSelect.value === 'custom' ? (parseFloat(customMult.value) || 0) : parseFloat(multSelect.value);
+            const val = parseCurrency(spendInput.value);
+            const isCustom = multSelect.value === 'custom';
+            let mult = isCustom ? (parseFloat(customMult.value) || 0) : parseFloat(multSelect.value);
+            
             const miles = (val / 40) * mult;
-            milesInput.value = miles.toFixed(2);
-            document.getElementById('cash-value').textContent = (miles * 0.16).toLocaleString(undefined, {minimumFractionDigits: 2});
-            document.getElementById('est-spend').textContent = val.toLocaleString(undefined, {minimumFractionDigits: 2});
+            
+            milesInput.value = formatCurrency(miles);
+            document.getElementById('cash-value').textContent = formatCurrency(miles * 0.16);
+            document.getElementById('est-spend').textContent = formatCurrency(val);
         }
 
-        [spendInput, customMult].forEach(el => el.addEventListener('input', calculateMiles));
+        [spendInput, customMult].forEach(el => {
+            el.addEventListener('calculate', calculateMiles);
+            el.addEventListener('input', calculateMiles);
+        });
+
         multSelect.addEventListener('change', () => {
-            customMult.classList.toggle('hidden', multSelect.value !== 'custom');
+            if(multSelect.value === 'custom') {
+                customMult.classList.remove('hidden');
+                customMult.focus();
+            } else {
+                customMult.classList.add('hidden');
+            }
             calculateMiles();
         });
 
+        // --- FINANCE CALCULATOR ---
+        setupCurrencyInput('loan-credit');
+        setupCurrencyInput('partial-payment');
+
         function calcFinance() {
-            const loan = parseFloat(document.getElementById('loan-credit').value) || 0;
-            const partial = parseFloat(document.getElementById('partial-payment').value) || 0;
+            const loan = parseCurrency(document.getElementById('loan-credit').value);
+            const partial = parseCurrency(document.getElementById('partial-payment').value);
             const term = parseFloat(document.getElementById('loan-term').value) || 30;
             const held = parseFloat(document.getElementById('days-held').value) || 20;
+            
+            // Original Logic: (loan * 0.03) / term * held
+            // Interest is calculated on the original loan amount for the days held
             const interest = (loan * 0.03) / term * held;
-            document.getElementById('finance-charge-result').textContent = (loan - partial + interest).toLocaleString(undefined, {minimumFractionDigits: 2});
+            
+            const remainingPrincipal = loan - partial;
+            const totalDue = remainingPrincipal + interest;
+
+            document.getElementById('fb-principal').textContent = '₱' + formatCurrency(remainingPrincipal);
+            document.getElementById('fb-interest').textContent = '₱' + formatCurrency(interest);
+            document.getElementById('finance-charge-result').textContent = formatCurrency(totalDue);
         }
-        ['loan-credit', 'partial-payment', 'loan-term', 'days-held'].forEach(id => document.getElementById(id).addEventListener('input', calcFinance));
+
+        ['loan-credit', 'partial-payment', 'loan-term', 'days-held'].forEach(id => {
+            const el = document.getElementById(id);
+            el.addEventListener('calculate', calcFinance);
+            el.addEventListener('input', calcFinance);
+        });
+
+        // --- LANTERN CALCULATOR ---
+        setupCurrencyInput('landers-spend');
+        setupCurrencyInput('total-card-spend');
 
         const lSpend = document.getElementById('landers-spend');
         const lTotal = document.getElementById('total-card-spend');
         const lCat = document.getElementById('landers-category');
+        const tierDisplay = document.getElementById('tier-display');
+        const rateDisplay = document.getElementById('rate-display');
 
         function calcLantern() {
-            const amt = parseFloat(lSpend.value) || 0;
-            const total = parseFloat(lTotal.value) || 0;
+            const amt = parseCurrency(lSpend.value);
+            const total = parseCurrency(lTotal.value);
             const cat = lCat.value;
-            let rate = cat === 'everywhere' ? 0.01 : (cat === 'dining' ? 0.02 : (total >= 50000 ? 0.05 : (total >= 20000 ? 0.04 : 0.03)));
-            document.getElementById('landers-result').textContent = (amt * rate).toLocaleString(undefined, {minimumFractionDigits: 2});
+            
+            let rate = 0;
+            let tierText = "Standard Base";
+            let tierClass = "text-blue-400";
+
+            if (cat === 'everywhere') {
+                rate = 0.01;
+                tierText = "Standard Base";
+            } else if (cat === 'dining') {
+                rate = 0.02;
+                tierText = "Dining Category";
+            } else if (cat === 'landers') {
+                // Tier Logic
+                if (total >= 50000) {
+                    rate = 0.05;
+                    tierText = "Platinum Tier (₱50k+)";
+                    tierClass = "text-purple-400";
+                } else if (total >= 20000) {
+                    rate = 0.04;
+                    tierText = "Gold Tier (₱20k+)";
+                    tierClass = "text-yellow-400";
+                } else {
+                    rate = 0.03;
+                    tierText = "Silver Tier (Base)";
+                }
+            }
+
+            // UI Updates
+            const result = amt * rate;
+            document.getElementById('landers-result').textContent = formatCurrency(result);
+            
+            tierDisplay.textContent = tierText;
+            rateDisplay.textContent = (rate * 100).toFixed(1) + '%';
+            
+            // Dynamic color class for rate
+            rateDisplay.className = `text-2xl font-mono font-bold mt-1 ${tierClass}`;
         }
-        [lSpend, lTotal, lCat].forEach(el => el.addEventListener('input', calcLantern));
+
+        [lSpend, lTotal, lCat].forEach(el => {
+            el.addEventListener('calculate', calcLantern);
+            el.addEventListener('input', calcLantern);
+        });
+
     </script>
 </body>
 </html>
