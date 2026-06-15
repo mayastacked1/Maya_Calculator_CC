@@ -99,10 +99,11 @@
                 <h1 class="text-2xl font-bold tracking-tight text-white">Sparrow <span class="text-zinc-600 font-light">| Internal Agent</span></h1>
                 <div class="flex items-center gap-2 mt-0.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <p class="text-[10px] uppercase tracking-widest text-zinc-500 font-medium">System Online • v1.5.0</p>
+                    <p class="text-[10px] uppercase tracking-widest text-zinc-500 font-medium">System Online • v1.8.0</p>
                 </div>
             </div>
         </div>
+        
         <div class="text-right bg-zinc-900/50 px-4 py-2 rounded-full border border-zinc-800">
             <span id="live-date-time" class="text-xs font-mono text-zinc-400">Syncing...</span>
         </div>
@@ -245,14 +246,17 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Transaction Amount</label>
+                        <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Current Transaction (A)</label>
                         <div class="relative">
                             <span class="absolute left-3 top-2.5 text-zinc-500">₱</span>
                             <input type="text" inputmode="decimal" id="landers-spend" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 pl-8 pr-4 text-white font-mono focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder-zinc-700">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Monthly Total (Tier Check)</label>
+                        <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">
+                            Previous Accumulated (C)
+                            <span class="block text-[8px] normal-case tracking-normal text-zinc-600 mt-0.5">*Spend before this transaction</span>
+                        </label>
                         <div class="relative">
                             <span class="absolute left-3 top-2.5 text-zinc-500">₱</span>
                             <input type="text" inputmode="decimal" id="total-card-spend" autocomplete="off" placeholder="0.00" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 pl-8 pr-4 text-white font-mono focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder-zinc-700">
@@ -263,38 +267,55 @@
                 <div>
                     <label class="block text-[10px] uppercase tracking-wider text-zinc-500 mb-1">Purchase Category</label>
                     <select id="landers-category" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 px-3 text-sm text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 appearance-none hover:bg-zinc-900 transition-colors">
-                        <option value="everywhere">Everyday Spend (1%)</option>
-                        <option value="dining">Dining & Leisure (2%)</option>
-                        <option value="landers">Lantern Partners (3-5%)</option>
+                        <option value="landers">Landers Superstore (Progressive)</option>
+                        <option value="dining">Dining (2%)</option>
+                        <option value="other">Other Retail (1%)</option>
+                        <option value="excluded">Excluded Categories (0%)</option>
+                        <option value="custom">Custom Percentage...</option>
                     </select>
+                    
+                    <!-- NEW: Custom Percentage Input -->
+                    <div id="landers-custom-group" class="hidden mt-3 animate-fade-in">
+                        <label class="block text-[10px] uppercase tracking-wider text-orange-400 mb-1">Custom Rate Override</label>
+                        <div class="relative">
+                            <input type="number" step="0.1" id="landers-custom-rate" placeholder="0.0" class="w-full bg-zinc-950/50 border border-orange-500/30 rounded-lg py-2 px-3 text-orange-400 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-orange-500/50 transition-all">
+                            <span class="absolute right-3 top-2.5 text-zinc-500 text-sm">%</span>
+                        </div>
+                        <p class="text-[9px] text-zinc-600 mt-1">*Overrides automatic tiering.</p>
+                    </div>
                 </div>
 
-                <!-- Tier Status Indicator -->
-                <div class="bg-zinc-950/50 p-4 rounded-lg border border-zinc-800 flex items-center justify-between">
-                    <div>
-                        <p class="text-[10px] uppercase text-zinc-500">Active Rate Tier</p>
-                        <p id="tier-display" class="text-sm font-bold text-white mt-1">Standard Base</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-[10px] uppercase text-zinc-500">Multiplier</p>
-                        <p id="rate-display" class="text-2xl font-mono font-bold text-blue-400 mt-1">1.0%</p>
-                    </div>
+                <!-- Calculation Details -->
+                <div class="bg-zinc-950/50 p-4 rounded-lg border border-zinc-800">
+                    <p class="text-[10px] uppercase text-zinc-500 mb-2">Computation Breakdown</p>
+                    <p id="tier-breakdown" class="text-xs font-mono text-zinc-300 leading-relaxed min-h-[1.5em]">
+                        Waiting for input...
+                    </p>
                 </div>
             </div>
 
-            <div class="md:w-1/2 bg-zinc-900/30 rounded-xl p-6 flex flex-col justify-center border border-dashed border-zinc-800">
-                <p class="text-xs uppercase tracking-widest text-zinc-500 mb-4">Estimated Cashback</p>
-                <div class="flex items-end justify-between">
-                    <p class="text-4xl md:text-5xl font-mono font-bold text-blue-400 tracking-tighter data-font group cursor-pointer" onclick="copyToClipboard('landers-result')">₱<span id="landers-result">0.00</span></p>
+            <div class="md:w-1/2 bg-zinc-900/30 rounded-xl p-6 flex flex-col justify-center border border-dashed border-zinc-800 relative">
+                <p class="text-xs uppercase tracking-widest text-zinc-500 mb-4">Points Earned</p>
+                <div class="flex items-end justify-between mb-4">
+                    <p class="text-4xl md:text-5xl font-mono font-bold text-blue-400 tracking-tighter data-font group cursor-pointer" onclick="copyToClipboard('landers-result')">
+                        <span id="landers-result">0.00</span> <span class="text-2xl text-zinc-500">pts</span>
+                    </p>
                     <button onclick="copyToClipboard('landers-result')" class="mb-2 p-2 hover:bg-blue-500/20 rounded-lg transition-colors text-blue-400">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
                     </button>
                 </div>
-                <div class="mt-4 pt-4 border-t border-zinc-800/50">
-                    <p class="text-[10px] text-zinc-500 leading-relaxed">
-                        *Lantern Partner rates increase based on Monthly Total Spend. 
-                        <span class="text-zinc-300 block mt-1">₱20k+ (4%) • ₱50k+ (5%)</span>
-                    </p>
+
+                <div class="w-full h-px bg-zinc-800 my-4"></div>
+
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-[10px] uppercase text-zinc-500">Vouchers Earned</p>
+                        <p class="text-[9px] text-zinc-600 mt-1">500 pts = 1 Voucher (₱500)</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-2xl font-mono font-bold text-white" id="voucher-result">0</p>
+                        <span class="text-[10px] text-zinc-500 uppercase">Vouchers</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -319,7 +340,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
         </svg>
-        <span class="text-xs font-medium">Value Copied</span>
+        <span class="text-xs font-medium" id="toast-message">Value Copied</span>
     </div>
 
     <script>
@@ -357,8 +378,9 @@
             });
         };
 
-        function showToast() {
+        function showToast(msg = "Value Copied") {
             const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
             toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
@@ -367,7 +389,7 @@
 
         window.copyToClipboard = (elementId) => {
             const text = document.getElementById(elementId).innerText || document.getElementById(elementId).value;
-            navigator.clipboard.writeText(text).then(showToast);
+            navigator.clipboard.writeText(text).then(() => showToast("Value Copied"));
         };
 
         // --- CLOCK ---
@@ -430,10 +452,7 @@
             const term = parseFloat(document.getElementById('loan-term').value) || 30;
             const held = parseFloat(document.getElementById('days-held').value) || 20;
             
-            // Original Logic: (loan * 0.03) / term * held
-            // Interest is calculated on the original loan amount for the days held
             const interest = (loan * 0.03) / term * held;
-            
             const remainingPrincipal = loan - partial;
             const totalDue = remainingPrincipal + interest;
 
@@ -448,61 +467,117 @@
             el.addEventListener('input', calcFinance);
         });
 
-        // --- LANTERN CALCULATOR ---
+        // --- LANTERN CALCULATOR (UPDATED LOGIC) ---
         setupCurrencyInput('landers-spend');
         setupCurrencyInput('total-card-spend');
 
         const lSpend = document.getElementById('landers-spend');
         const lTotal = document.getElementById('total-card-spend');
         const lCat = document.getElementById('landers-category');
-        const tierDisplay = document.getElementById('tier-display');
-        const rateDisplay = document.getElementById('rate-display');
+        const lCustomInput = document.getElementById('landers-custom-rate');
+        const lCustomGroup = document.getElementById('landers-custom-group');
 
         function calcLantern() {
-            const amt = parseCurrency(lSpend.value);
-            const total = parseCurrency(lTotal.value);
+            // (A) Current Transaction
+            const A = parseCurrency(lSpend.value);
+            // (C) Previous Accumulated Spend
+            const C = parseCurrency(lTotal.value);
             const cat = lCat.value;
             
-            let rate = 0;
-            let tierText = "Standard Base";
-            let tierClass = "text-blue-400";
+            let points = 0;
+            let breakdownHTML = "";
+            
+            // Tier Limits (Upper Limits)
+            const T1 = 20000;
+            const T2 = 50000;
+            // T3 is Infinity
 
-            if (cat === 'everywhere') {
-                rate = 0.01;
-                tierText = "Standard Base";
-            } else if (cat === 'dining') {
-                rate = 0.02;
-                tierText = "Dining Category";
-            } else if (cat === 'landers') {
-                // Tier Logic
-                if (total >= 50000) {
-                    rate = 0.05;
-                    tierText = "Platinum Tier (₱50k+)";
-                    tierClass = "text-purple-400";
-                } else if (total >= 20000) {
-                    rate = 0.04;
-                    tierText = "Gold Tier (₱20k+)";
-                    tierClass = "text-yellow-400";
-                } else {
-                    rate = 0.03;
-                    tierText = "Silver Tier (Base)";
+            if (cat === 'landers') {
+                // --- PROGRESSIVE TIER LOGIC ---
+                // Formula: Points = Sum [ min(A, max(0, Ti - C)) * ri ]
+                
+                // Tier 1 Calculation (0 - 20,000 @ 3%)
+                // max(0, T1 - C) = space remaining in Tier 1
+                const spaceT1 = Math.max(0, T1 - C);
+                // min(A, spaceT1) = amount of current tx that fits in Tier 1
+                const portionT1 = Math.min(A, spaceT1);
+                const ptsT1 = portionT1 * 0.03;
+                points += ptsT1;
+
+                if (portionT1 > 0) {
+                    breakdownHTML += `<span class="text-emerald-400">${formatCurrency(portionT1)} @ 3%</span> = ${ptsT1.toFixed(2)} pts<br>`;
                 }
+
+                // Tier 2 Calculation (20,000 - 50,000 @ 4%)
+                const spaceT2 = Math.max(0, T2 - C);
+                const portionT2 = Math.min(A, spaceT2);
+                const ptsT2 = portionT2 * 0.04;
+                points += ptsT2;
+
+                if (portionT2 > 0) {
+                    breakdownHTML += `<span class="text-yellow-400">${formatCurrency(portionT2)} @ 4%</span> = ${ptsT2.toFixed(2)} pts<br>`;
+                }
+
+                // Tier 3 Calculation (> 50,000 @ 5%)
+                // Space is infinite, so amount is just A
+                const portionT3 = A; 
+                // However, logically we only apply Tier 3 rate if we are past T2
+                // But the formula min(A, max(0, Inf - C)) ensures A is used if C >= T2.
+                // Let's refine: Only apply Tier 3 if the previous tiers are full? 
+                // No, the sum of min(A, space) for overlapping tiers (like infinite T3) 
+                // requires careful handling of A if we don't subtract.
+                // Correction for T3: The amount that falls into T3 is the amount of A that pushes C+A over T2.
+                // Range logic is safer for display: Amount in tier = min(C+A, T2) - max(C, T2)
+                const amountInT3 = Math.min(C + A, T2) - Math.max(C, T2);
+                const ptsT3 = amountInT3 * 0.05;
+                points += ptsT3;
+
+                if (amountInT3 > 0) {
+                    breakdownHTML += `<span class="text-purple-400">${formatCurrency(amountInT3)} @ 5%</span> = ${ptsT3.toFixed(2)} pts<br>`;
+                }
+                
+                if(breakdownHTML === "") breakdownHTML = "No points earned (0 amount).";
+
+            } else if (cat === 'dining') {
+                points = A * 0.02;
+                breakdownHTML = `Flat Rate 2% on ${formatCurrency(A)} <br> = ${points.toFixed(2)} pts`;
+            } else if (cat === 'other') {
+                points = A * 0.01;
+                breakdownHTML = `Flat Rate 1% on ${formatCurrency(A)} <br> = ${points.toFixed(2)} pts`;
+            } else if (cat === 'excluded') {
+                points = 0;
+                breakdownHTML = `Excluded Category (0%)`;
+            } else if (cat === 'custom') {
+                let customVal = parseFloat(lCustomInput.value) || 0;
+                points = A * (customVal / 100);
+                breakdownHTML = `Custom Rate ${customVal}% on ${formatCurrency(A)} <br> = ${points.toFixed(2)} pts`;
             }
 
+            // Voucher Calc: 500 points = 1 voucher
+            const vouchers = Math.floor(points / 500);
+            
             // UI Updates
-            const result = amt * rate;
-            document.getElementById('landers-result').textContent = formatCurrency(result);
-            
-            tierDisplay.textContent = tierText;
-            rateDisplay.textContent = (rate * 100).toFixed(1) + '%';
-            
-            // Dynamic color class for rate
-            rateDisplay.className = `text-2xl font-mono font-bold mt-1 ${tierClass}`;
+            // Round points to 2 decimal places
+            document.getElementById('landers-result').textContent = points.toFixed(2);
+            document.getElementById('voucher-result').textContent = vouchers.toLocaleString();
+            document.getElementById('tier-breakdown').innerHTML = breakdownHTML;
         }
 
-        [lSpend, lTotal, lCat].forEach(el => {
+        // Handle inputs for Lantern
+        [lSpend, lTotal, lCat, lCustomInput].forEach(el => {
             el.addEventListener('calculate', calcLantern);
             el.addEventListener('input', calcLantern);
+        });
+
+        // Toggle Custom Input visibility
+        lCat.addEventListener('change', () => {
+            if(lCat.value === 'custom') {
+                lCustomGroup.classList.remove('hidden');
+                lCustomInput.focus();
+            } else {
+                lCustomGroup.classList.add('hidden');
+            }
+            calcLantern();
         });
 
     </script>
