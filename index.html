@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maya | Utility Terminal</title>
+    <link rel="icon" type="image/png" href="mayalogo(1).png">
     <!-- Fonts: Inter for UI, JetBrains Mono for Data -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,6 +63,13 @@
         .loader-overlay { transition: opacity 0.6s ease-out, visibility 0.6s; }
         .hidden-loader { opacity: 0; visibility: hidden; pointer-events: none; }
 
+        /* Loader Logo Pulse */
+        @keyframes logoPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .loader-logo { animation: logoPulse 1.8s ease-in-out infinite; }
+
         /* Input Reset */
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
@@ -91,27 +99,43 @@
         #maya-chat::-webkit-scrollbar-track { background: transparent; }
         #maya-chat::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
         #maya-chat::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+
+        /* Header Logo */
+        .header-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        /* Footer Logo */
+        .footer-logo {
+            width: 18px;
+            height: 18px;
+            object-fit: contain;
+            opacity: 0.5;
+        }
+
+        /* Chat Logo */
+        .chat-logo {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body class="text-zinc-100 min-h-screen p-4 md:p-8 font-sans antialiased selection:bg-emerald-500/30 selection:text-emerald-400">
 
     <div id="loader" class="fixed inset-0 z-[100] bg-zinc-950 flex flex-col items-center justify-center loader-overlay">
-        <div class="relative w-20 h-20">
-            <div class="absolute inset-0 border-t-4 border-emerald-500 rounded-full animate-spin"></div>
-            <div class="absolute inset-2 border-r-4 border-blue-500 rounded-full animate-spin" style="animation-direction: reverse; animation-duration: 1.5s;"></div>
-        </div>
-        <p class="mt-6 text-zinc-500 text-[10px] uppercase tracking-[0.3em] animate-pulse">Initializing Maya Link...</p>
+        <img src="mayalogo(1).png" alt="Maya" class="w-16 h-16 object-contain loader-logo mb-6">
+        <p class="text-zinc-500 text-[10px] uppercase tracking-[0.3em] animate-pulse">Initializing Maya Link...</p>
     </div>
 
     <div class="ambient-glow"></div>
 
     <header class="max-w-6xl mx-auto mb-10 border-b border-zinc-800 pb-6 flex flex-col md:flex-row items-center justify-between gap-4 animate-fade-in">
         <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-900 flex items-center justify-center shadow-lg shadow-emerald-900/20">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-            </div>
+            <img src="mayalogo(1).png" alt="Maya" class="header-logo">
             <div>
                 <h1 class="text-2xl font-bold tracking-tight text-white">Maya <span class="text-zinc-600 font-light">| Internal Agent</span></h1>
                 <div class="flex items-center gap-2 mt-0.5">
@@ -370,8 +394,8 @@
             <!-- Chat Messages -->
             <div id="maya-chat" class="flex-grow h-80 overflow-y-auto space-y-3 pr-2 mb-4 scroll-smooth">
                 <div class="flex gap-3 animate-fade-in">
-                    <div class="w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    <div class="w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+                        <img src="mayalogo(1).png" alt="Maya" class="chat-logo">
                     </div>
                     <div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3 max-w-[85%]">
                         <p class="text-xs text-zinc-300 leading-relaxed">Hello! I'm the <strong class="text-violet-400">Maya Credit Card AI Assistant</strong>. I specialize in the <strong class="text-violet-400">Maya Black Credit Card</strong> and <strong class="text-violet-400">Maya Landers Credit Card</strong> — including the Landers Cashback Everywhere promo mechanics, fees, finance charges, payment rules, and terms & conditions. What would you like to know?</p>
@@ -398,7 +422,10 @@
             <div class="px-2 py-1 rounded border border-zinc-800 bg-zinc-950/50">
                 <p class="text-[9px] font-mono uppercase text-emerald-500">System Normal</p>
             </div>
-            <p class="text-[10px] uppercase tracking-widest">Maya Infrastructure</p>
+            <div class="flex items-center gap-2">
+                <img src="mayalogo(1).png" alt="Maya" class="footer-logo">
+                <p class="text-[10px] uppercase tracking-widest">Maya Infrastructure</p>
+            </div>
         </div>
         <div class="text-center md:text-right">
             <p class="text-[10px] uppercase tracking-widest text-zinc-500 font-bold mb-1">Engineering Team</p>
@@ -920,8 +947,8 @@ FORMATTING:
                 `;
             } else {
                 wrapper.innerHTML = `
-                    <div class="w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    <div class="w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+                        <img src="mayalogo(1).png" alt="Maya" class="chat-logo">
                     </div>
                     <div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3 max-w-[85%]">
                         <div class="text-xs text-zinc-300 leading-relaxed maya-response-text">${formatMayaResponse(content)}</div>
@@ -940,8 +967,8 @@ FORMATTING:
             wrapper.id = 'maya-typing';
 
             wrapper.innerHTML = `
-                <div class="w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                <div class="w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+                    <img src="mayalogo(1).png" alt="Maya" class="chat-logo opacity-50">
                 </div>
                 <div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3">
                     <div class="flex items-center gap-1.5 h-4">
@@ -1012,8 +1039,8 @@ FORMATTING:
             const chat = getMayaChat();
             chat.innerHTML = `
                 <div class="flex gap-3 animate-fade-in">
-                    <div class="w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                    <div class="w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
+                        <img src="mayalogo(1).png" alt="Maya" class="chat-logo">
                     </div>
                     <div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3 max-w-[85%]">
                         <p class="text-xs text-zinc-300 leading-relaxed">Hello! I'm the <strong class="text-violet-400">Maya Credit Card AI Assistant</strong>. I specialize in the <strong class="text-violet-400">Maya Black Credit Card</strong> and <strong class="text-violet-400">Maya Landers Credit Card</strong> — including the Landers Cashback Everywhere promo mechanics, fees, finance charges, payment rules, and terms & conditions. What would you like to know?</p>
@@ -1060,7 +1087,7 @@ FORMATTING:
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        model: 'llama-3.3-70b-versatile',
+                        model: 'groq/compound',
                         messages: mayaChatHistory,
                         temperature: 0.3,
                         max_tokens: 1024,
