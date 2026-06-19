@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maya | Utility Terminal</title>
-    <link rel="icon" type="image/png" href="mayalogo.png" onerror="this.href='mayalogo(1).png'">
+    <link rel="icon" type="image/png" href="mayagreenmayagreenlogo.png.png" onerror="this.href='mayagreenmayagreenlogo.png.png'">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -56,11 +56,11 @@
         ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
         .loader-overlay { transition: opacity 0.6s ease-out, visibility 0.6s; }
         .hidden-loader { opacity: 0; visibility: hidden; pointer-events: none; }
-        @keyframes logoPulse {
+        @keyframes mayagreenlogo.pngPulse {
             0%, 100% { opacity: 0.6; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.05); }
         }
-        .loader-logo { animation: logoPulse 1.8s ease-in-out infinite; }
+        .loader-mayagreenlogo.png { animation: mayagreenlogo.pngPulse 1.8s ease-in-out infinite; }
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         .glass-panel {
@@ -81,10 +81,10 @@
         #maya-chat::-webkit-scrollbar-track { background: transparent; }
         #maya-chat::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
         #maya-chat::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
-        .header-logo { width: 40px; height: 40px; object-fit: contain; border-radius: 10px; }
-        .footer-logo { width: 18px; height: 18px; object-fit: contain; opacity: 0.5; }
-        .chat-logo { width: 20px; height: 20px; object-fit: contain; }
-        .logo-fallback {
+        .header-mayagreenlogo.png { width: 40px; height: 40px; object-fit: contain; border-radius: 10px; }
+        .footer-mayagreenlogo.png { width: 18px; height: 18px; object-fit: contain; opacity: 0.5; }
+        .chat-mayagreenlogo.png { width: 20px; height: 20px; object-fit: contain; }
+        .mayagreenlogo.png-fallback {
             display: flex; align-items: center; justify-content: center;
             font-weight: 800; font-size: 16px; color: #a78bfa;
         }
@@ -93,9 +93,9 @@
 <body class="text-zinc-100 min-h-screen p-4 md:p-8 font-sans antialiased selection:bg-emerald-500/30 selection:text-emerald-400">
 
     <div id="loader" class="fixed inset-0 z-[100] bg-zinc-950 flex flex-col items-center justify-center loader-overlay">
-        <div class="w-16 h-16 flex items-center justify-center loader-logo mb-6">
-            <img src="mayalogo.png" alt="Maya" class="w-16 h-16 object-contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="logo-fallback hidden w-16 h-16 rounded-xl bg-violet-600/20 border border-violet-500/30">M</div>
+        <div class="w-16 h-16 flex items-center justify-center loader-mayagreenlogo.png mb-6">
+            <img src="mayamayagreenlogo.png.png" alt="Maya" class="w-16 h-16 object-contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="mayagreenlogo.png-fallback hidden w-16 h-16 rounded-xl bg-violet-600/20 border border-violet-500/30">M</div>
         </div>
         <p class="text-zinc-500 text-[10px] uppercase tracking-[0.3em] animate-pulse">Initializing Maya Link...</p>
     </div>
@@ -104,9 +104,9 @@
 
     <header class="max-w-6xl mx-auto mb-10 border-b border-zinc-800 pb-6 flex flex-col md:flex-row items-center justify-between gap-4 animate-fade-in">
         <div class="flex items-center gap-4">
-            <div class="header-logo flex items-center justify-center overflow-hidden bg-zinc-800/50">
-                <img src="mayalogo.png" alt="Maya" class="header-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="logo-fallback hidden w-10 h-10 rounded-[10px] bg-violet-600/20 border border-violet-500/30 text-sm">M</div>
+            <div class="header-mayagreenlogo.png flex items-center justify-center overflow-hidden bg-zinc-800/50">
+                <img src="mayamayagreenlogo.png.png" alt="Maya" class="header-mayagreenlogo.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="mayagreenlogo.png-fallback hidden w-10 h-10 rounded-[10px] bg-violet-600/20 border border-violet-500/30 text-sm">M</div>
             </div>
             <div>
                 <h1 class="text-2xl font-bold tracking-tight text-white">Maya <span class="text-zinc-600 font-light">| Internal Agent</span></h1>
@@ -336,8 +336,8 @@
             <div id="maya-chat" class="flex-grow h-80 overflow-y-auto space-y-3 pr-2 mb-4 scroll-smooth">
                 <div class="flex gap-3 animate-fade-in">
                     <div class="w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
-                        <img src="mayalogo.png" alt="" class="chat-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                        <div class="logo-fallback hidden w-5 h-5 rounded bg-violet-600/20 border border-violet-500/30 text-[10px]">M</div>
+                        <img src="mayamayagreenlogo.png.png" alt="" class="chat-mayagreenlogo.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="mayagreenlogo.png-fallback hidden w-5 h-5 rounded bg-violet-600/20 border border-violet-500/30 text-[10px]">M</div>
                     </div>
                     <div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3 max-w-[85%]">
                         <p class="text-xs text-zinc-300 leading-relaxed">Hello! I'm the <strong class="text-violet-400">Maya Credit Card AI</strong>. I handle **Maya Black CC** and **Maya Landers CC** questions — features, promo mechanics, fees, payments. Keep it brief and I'll do the same. What do you need?</p>
@@ -360,7 +360,7 @@
                 <p class="text-[9px] font-mono uppercase text-emerald-500">System Normal</p>
             </div>
             <div class="flex items-center gap-2">
-                <img src="mayalogo.png" alt="" class="footer-logo" onerror="this.style.display='none'">
+                <img src="mayamayagreenlogo.png.png" alt="" class="footer-mayagreenlogo.png" onerror="this.style.display='none'">
                 <p class="text-[10px] uppercase tracking-widest">Maya Infrastructure</p>
             </div>
         </div>
@@ -551,14 +551,14 @@
         function getMayaInput() { return document.getElementById('maya-input'); }
         function scrollMayaChat() { var chat = getMayaChat(); chat.scrollTop = chat.scrollHeight; }
 
-        // Helper to create a logo avatar element
-        function makeLogoAvatar(size) {
+        // Helper to create a mayagreenlogo.png avatar element
+        function makemayagreenlogo.pngAvatar(size) {
             var wrap = document.createElement('div');
             wrap.className = 'w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden';
             var img = document.createElement('img');
-            img.src = 'mayalogo.png';
+            img.src = 'mayamayagreenlogo.png.png';
             img.alt = '';
-            img.className = 'chat-logo';
+            img.className = 'chat-mayagreenlogo.png';
             img.onerror = function() {
                 this.style.display = 'none';
                 var fb = this.nextElementSibling;
@@ -566,7 +566,7 @@
             };
             wrap.appendChild(img);
             var fb = document.createElement('div');
-            fb.className = 'logo-fallback hidden w-5 h-5 rounded bg-violet-600/20 border border-violet-500/30 text-[10px]';
+            fb.className = 'mayagreenlogo.png-fallback hidden w-5 h-5 rounded bg-violet-600/20 border border-violet-500/30 text-[10px]';
             fb.textContent = 'M';
             wrap.appendChild(fb);
             return wrap;
@@ -579,7 +579,7 @@
             if (role === 'user') {
                 wrapper.innerHTML = '<div class="ml-auto max-w-[85%]"><div class="bg-violet-600/20 border border-violet-500/20 rounded-xl rounded-tr-sm px-4 py-3"><p class="text-xs text-zinc-200 leading-relaxed">' + escapeHtml(content) + '</p></div></div><div class="w-7 h-7 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-zinc-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg></div>';
             } else {
-                wrapper.appendChild(makeLogoAvatar());
+                wrapper.appendChild(makemayagreenlogo.pngAvatar());
                 wrapper.innerHTML += '<div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3 max-w-[85%]"><div class="text-xs text-zinc-300 leading-relaxed maya-response-text">' + formatMayaResponse(content) + '</div></div>';
             }
             chat.appendChild(wrapper);
@@ -591,7 +591,7 @@
             var wrapper = document.createElement('div');
             wrapper.className = 'flex gap-3 animate-fade-in';
             wrapper.id = 'maya-typing';
-            var avatar = makeLogoAvatar();
+            var avatar = makemayagreenlogo.pngAvatar();
             avatar.querySelector('img').style.opacity = '0.5';
             wrapper.appendChild(avatar);
             wrapper.innerHTML += '<div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3"><div class="flex items-center gap-1.5 h-4"><div class="w-1.5 h-1.5 bg-violet-400 rounded-full typing-dot"></div><div class="w-1.5 h-1.5 bg-violet-400 rounded-full typing-dot"></div><div class="w-1.5 h-1.5 bg-violet-400 rounded-full typing-dot"></div></div></div>';
@@ -633,7 +633,7 @@
             chat.innerHTML = '';
             var wrapper = document.createElement('div');
             wrapper.className = 'flex gap-3 animate-fade-in';
-            wrapper.appendChild(makeLogoAvatar());
+            wrapper.appendChild(makemayagreenlogo.pngAvatar());
             wrapper.innerHTML += '<div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3 max-w-[85%]"><p class="text-xs text-zinc-300 leading-relaxed">Hello! I\'m the <strong class="text-violet-400">Maya Credit Card AI</strong>. I handle **Maya Black CC** and **Maya Landers CC** questions — features, promo mechanics, fees, payments. Keep it brief and I\'ll do the same. What do you need?</p></div>';
             chat.appendChild(wrapper);
             mayaChatHistory = [
