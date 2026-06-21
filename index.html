@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maya | Utility Terminal</title>
-    <link rel="icon" type="image/png" href="mayagreenmayagreenlogo.png.png" onerror="this.href='mayagreenmayagreenlogo.png.png'">
+    <link rel="icon" type="image/png" href="mayalogo.png" onerror="this.href='mayalogo(1).png'">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -56,11 +56,11 @@
         ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
         .loader-overlay { transition: opacity 0.6s ease-out, visibility 0.6s; }
         .hidden-loader { opacity: 0; visibility: hidden; pointer-events: none; }
-        @keyframes mayagreenlogo.pngPulse {
+        @keyframes logoPulse {
             0%, 100% { opacity: 0.6; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.05); }
         }
-        .loader-mayagreenlogo.png { animation: mayagreenlogo.pngPulse 1.8s ease-in-out infinite; }
+        .loader-logo { animation: logoPulse 1.8s ease-in-out infinite; }
         input[type=number]::-webkit-inner-spin-button, 
         input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         .glass-panel {
@@ -81,10 +81,10 @@
         #maya-chat::-webkit-scrollbar-track { background: transparent; }
         #maya-chat::-webkit-scrollbar-thumb { background: #27272a; border-radius: 2px; }
         #maya-chat::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
-        .header-mayagreenlogo.png { width: 40px; height: 40px; object-fit: contain; border-radius: 10px; }
-        .footer-mayagreenlogo.png { width: 18px; height: 18px; object-fit: contain; opacity: 0.5; }
-        .chat-mayagreenlogo.png { width: 20px; height: 20px; object-fit: contain; }
-        .mayagreenlogo.png-fallback {
+        .header-logo { width: 40px; height: 40px; object-fit: contain; border-radius: 10px; }
+        .footer-logo { width: 18px; height: 18px; object-fit: contain; opacity: 0.5; }
+        .chat-logo { width: 20px; height: 20px; object-fit: contain; }
+        .logo-fallback {
             display: flex; align-items: center; justify-content: center;
             font-weight: 800; font-size: 16px; color: #a78bfa;
         }
@@ -93,20 +93,20 @@
 <body class="text-zinc-100 min-h-screen p-4 md:p-8 font-sans antialiased selection:bg-emerald-500/30 selection:text-emerald-400">
 
     <div id="loader" class="fixed inset-0 z-[100] bg-zinc-950 flex flex-col items-center justify-center loader-overlay">
-        <div class="w-16 h-16 flex items-center justify-center loader-mayagreenlogo.png mb-6">
-            <img src="mayamayagreenlogo.png.png" alt="Maya" class="w-16 h-16 object-contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="mayagreenlogo.png-fallback hidden w-16 h-16 rounded-xl bg-violet-600/20 border border-violet-500/30">M</div>
+        <div class="w-16 h-16 flex items-center justify-center loader-logo mb-6">
+            <img src="mayalogo.png" alt="Maya" class="w-16 h-16 object-contain" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="logo-fallback hidden w-16 h-16 rounded-xl bg-violet-600/20 border border-violet-500/30">M</div>
         </div>
-        <p class="text-zinc-500 text-[10px] uppercase tracking-[0.3em] animate-pulse">-IN PROGRESS-</p>
+        <p class="text-zinc-500 text-[10px] uppercase tracking-[0.3em] animate-pulse">Initializing Maya Link...</p>
     </div>
 
     <div class="ambient-glow"></div>
 
     <header class="max-w-6xl mx-auto mb-10 border-b border-zinc-800 pb-6 flex flex-col md:flex-row items-center justify-between gap-4 animate-fade-in">
         <div class="flex items-center gap-4">
-            <div class="header-mayagreenlogo.png flex items-center justify-center overflow-hidden bg-zinc-800/50">
-                <img src="mayamayagreenlogo.png.png" alt="Maya" class="header-mayagreenlogo.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="mayagreenlogo.png-fallback hidden w-10 h-10 rounded-[10px] bg-violet-600/20 border border-violet-500/30 text-sm">M</div>
+            <div class="header-logo flex items-center justify-center overflow-hidden bg-zinc-800/50">
+                <img src="mayalogo.png" alt="Maya" class="header-logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="logo-fallback hidden w-10 h-10 rounded-[10px] bg-violet-600/20 border border-violet-500/30 text-sm">M</div>
             </div>
             <div>
                 <h1 class="text-2xl font-bold tracking-tight text-white">Maya <span class="text-zinc-600 font-light">| Internal Agent</span></h1>
@@ -333,17 +333,7 @@
                 <button onclick="sendMayaQuick('What are the excluded categories for cashback?')" class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-violet-500/30 text-zinc-400 hover:text-violet-300 text-[10px] rounded-full transition-all">Excluded Cats</button>
                 <button onclick="sendMayaQuick('How do I redeem Landers vouchers?')" class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-violet-500/30 text-zinc-400 hover:text-violet-300 text-[10px] rounded-full transition-all">Redeem Voucher</button>
             </div>
-            <div id="maya-chat" class="flex-grow h-80 overflow-y-auto space-y-3 pr-2 mb-4 scroll-smooth">
-                <div class="flex gap-3 animate-fade-in">
-                    <div class="w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden">
-                        <img src="mayamayagreenlogo.png.png" alt="" class="chat-mayagreenlogo.png" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                        <div class="mayagreenlogo.png-fallback hidden w-5 h-5 rounded bg-violet-600/20 border border-violet-500/30 text-[10px]">M</div>
-                    </div>
-                    <div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3 max-w-[85%]">
-                        <p class="text-xs text-zinc-300 leading-relaxed">Hello! I'm the <strong class="text-violet-400">Maya Credit Card AI</strong>. I handle **Maya Black CC** and **Maya Landers CC** questions — features, promo mechanics, fees, payments. Keep it brief and I'll do the same. What do you need?</p>
-                    </div>
-                </div>
-            </div>
+            <div id="maya-chat" class="flex-grow h-80 overflow-y-auto space-y-3 pr-2 mb-4 scroll-smooth"></div>
             <div class="flex gap-2">
                 <input type="text" id="maya-input" placeholder="Ask about Maya Black or Maya Landers CC..." autocomplete="off" class="flex-grow bg-zinc-950 border border-zinc-800 rounded-lg py-2.5 px-4 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-violet-500 focus:ring-1 focus:ring-violet-500 transition-all" onkeydown="if(event.key==='Enter')sendMayaMessage()">
                 <button onclick="sendMayaMessage()" id="maya-send-btn" class="px-4 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-lg transition-colors flex items-center gap-2 shrink-0 disabled:opacity-40 disabled:cursor-not-allowed">
@@ -360,7 +350,7 @@
                 <p class="text-[9px] font-mono uppercase text-emerald-500">System Normal</p>
             </div>
             <div class="flex items-center gap-2">
-                <img src="mayamayagreenlogo.png.png" alt="" class="footer-mayagreenlogo.png" onerror="this.style.display='none'">
+                <img src="mayalogo.png" alt="" class="footer-logo" onerror="this.style.display='none'">
                 <p class="text-[10px] uppercase tracking-widest">Maya Infrastructure</p>
             </div>
         </div>
@@ -376,79 +366,76 @@
     </div>
 
     <script>
-        // --- UTILS ---
-        const formatCurrency = (num) => {
+        var formatCurrency = function(num) {
             return new Intl.NumberFormat('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
         };
-        const parseCurrency = (str) => {
+        var parseCurrency = function(str) {
             if(!str) return 0;
             return parseFloat(str.replace(/[^0-9.-]+/g, "")) || 0;
         };
-        const setupCurrencyInput = (id) => {
-            const el = document.getElementById(id);
-            el.addEventListener('blur', () => {
-                const val = parseCurrency(el.value);
+        var setupCurrencyInput = function(id) {
+            var el = document.getElementById(id);
+            el.addEventListener('blur', function() {
+                var val = parseCurrency(el.value);
                 if(val > 0) el.value = formatCurrency(val);
                 else el.value = "";
             });
-            el.addEventListener('focus', () => {
-                const val = parseCurrency(el.value);
+            el.addEventListener('focus', function() {
+                var val = parseCurrency(el.value);
                 if(val > 0) el.value = val;
             });
-            el.addEventListener('input', () => { el.dispatchEvent(new Event('calculate')); });
-        };
-        function showToast(msg = "Value Copied") {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').innerText = msg;
-            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
-            setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none'); }, 2000);
-        }
-        window.copyToClipboard = (elementId) => {
-            const text = document.getElementById(elementId).innerText || document.getElementById(elementId).value;
-            navigator.clipboard.writeText(text).then(() => showToast("Value Copied"));
+            el.addEventListener('input', function() { el.dispatchEvent(new Event('calculate')); });
         };
 
-        // --- CLOCK ---
+        function showToast(msg) {
+            var toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg || "Value Copied";
+            toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            setTimeout(function() { toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none'); }, 2000);
+        }
+
+        window.copyToClipboard = function(elementId) {
+            var text = document.getElementById(elementId).innerText || document.getElementById(elementId).value;
+            navigator.clipboard.writeText(text).then(function() { showToast("Value Copied"); });
+        };
+
         function updateClock() {
-            const now = new Date();
+            var now = new Date();
             document.getElementById('live-date-time').textContent = now.toLocaleString('en-US', { 
                 month: 'short', day: 'numeric', year: 'numeric', 
                 hour: '2-digit', minute: '2-digit', second: '2-digit' 
             });
         }
-        setInterval(updateClock, 1000); updateClock();
+        setInterval(updateClock, 1000); 
+        updateClock();
 
-        // --- LOADER (with failsafe) ---
         function hideLoader() {
             var el = document.getElementById('loader');
             if (el) el.classList.add('hidden-loader');
         }
-        window.addEventListener('load', function() {
-            setTimeout(hideLoader, 1200);
-        });
-        // Failsafe: always hide loader after 5 seconds no matter what
+        window.addEventListener('load', function() { setTimeout(hideLoader, 1200); });
         setTimeout(hideLoader, 5000);
 
         // --- MILES CALCULATOR ---
-        const spendInput = document.getElementById('spend-input');
-        const multSelect = document.getElementById('multiplier-select');
-        const customMult = document.getElementById('custom-multiplier');
-        const milesInput = document.getElementById('miles-input');
+        var spendInput = document.getElementById('spend-input');
+        var multSelect = document.getElementById('multiplier-select');
+        var customMult = document.getElementById('custom-multiplier');
+        var milesInput = document.getElementById('miles-input');
         setupCurrencyInput('spend-input');
+
         function calculateMiles() {
-            const val = parseCurrency(spendInput.value);
-            const isCustom = multSelect.value === 'custom';
-            let mult = isCustom ? (parseFloat(customMult.value) || 0) : parseFloat(multSelect.value);
-            const miles = (val / 40) * mult;
+            var val = parseCurrency(spendInput.value);
+            var isCustom = multSelect.value === 'custom';
+            var mult = isCustom ? (parseFloat(customMult.value) || 0) : parseFloat(multSelect.value);
+            var miles = (val / 40) * mult;
             milesInput.value = formatCurrency(miles);
             document.getElementById('cash-value').textContent = formatCurrency(miles * 0.16);
             document.getElementById('est-spend').textContent = formatCurrency(val);
         }
-        [spendInput, customMult].forEach(el => {
-            el.addEventListener('calculate', calculateMiles);
-            el.addEventListener('input', calculateMiles);
-        });
-        multSelect.addEventListener('change', () => {
+        spendInput.addEventListener('calculate', calculateMiles);
+        spendInput.addEventListener('input', calculateMiles);
+        customMult.addEventListener('input', calculateMiles);
+        multSelect.addEventListener('change', function() {
             if(multSelect.value === 'custom') { customMult.classList.remove('hidden'); customMult.focus(); }
             else { customMult.classList.add('hidden'); }
             calculateMiles();
@@ -457,56 +444,61 @@
         // --- FINANCE CALCULATOR ---
         setupCurrencyInput('loan-credit');
         setupCurrencyInput('partial-payment');
+
         function calcFinance() {
-            const loan = parseCurrency(document.getElementById('loan-credit').value);
-            const partial = parseCurrency(document.getElementById('partial-payment').value);
-            const term = parseFloat(document.getElementById('loan-term').value) || 30;
-            const held = parseFloat(document.getElementById('days-held').value) || 20;
-            const interest = (loan * 0.03) / term * held;
-            const remainingPrincipal = loan - partial;
-            const totalDue = remainingPrincipal + interest;
+            var loan = parseCurrency(document.getElementById('loan-credit').value);
+            var partial = parseCurrency(document.getElementById('partial-payment').value);
+            var term = parseFloat(document.getElementById('loan-term').value) || 30;
+            var held = parseFloat(document.getElementById('days-held').value) || 20;
+            var interest = (loan * 0.03) / term * held;
+            var remainingPrincipal = loan - partial;
+            var totalDue = remainingPrincipal + interest;
             document.getElementById('fb-principal').textContent = '₱' + formatCurrency(remainingPrincipal);
             document.getElementById('fb-interest').textContent = '₱' + formatCurrency(interest);
             document.getElementById('finance-charge-result').textContent = formatCurrency(totalDue);
         }
-        ['loan-credit', 'partial-payment', 'loan-term', 'days-held'].forEach(id => {
-            const el = document.getElementById(id);
-            el.addEventListener('calculate', calcFinance);
-            el.addEventListener('input', calcFinance);
-        });
+        document.getElementById('loan-credit').addEventListener('calculate', calcFinance);
+        document.getElementById('loan-credit').addEventListener('input', calcFinance);
+        document.getElementById('partial-payment').addEventListener('calculate', calcFinance);
+        document.getElementById('partial-payment').addEventListener('input', calcFinance);
+        document.getElementById('loan-term').addEventListener('input', calcFinance);
+        document.getElementById('days-held').addEventListener('input', calcFinance);
 
         // --- LANTERN CALCULATOR ---
         setupCurrencyInput('landers-spend');
         setupCurrencyInput('total-card-spend');
-        const lSpend = document.getElementById('landers-spend');
-        const lTotal = document.getElementById('total-card-spend');
-        const lCat = document.getElementById('landers-category');
-        const lCustomInput = document.getElementById('landers-custom-rate');
-        const lCustomGroup = document.getElementById('landers-custom-group');
+
+        var lSpend = document.getElementById('landers-spend');
+        var lTotal = document.getElementById('total-card-spend');
+        var lCat = document.getElementById('landers-category');
+        var lCustomInput = document.getElementById('landers-custom-rate');
+        var lCustomGroup = document.getElementById('landers-custom-group');
+
         function calcLantern() {
-            const A = parseCurrency(lSpend.value);
-            const C = parseCurrency(lTotal.value);
-            const cat = lCat.value;
-            let points = 0;
-            let breakdownHTML = "";
-            const T1 = 20000;
-            const T2 = 50000;
+            var A = parseCurrency(lSpend.value);
+            var C = parseCurrency(lTotal.value);
+            var cat = lCat.value;
+            var points = 0;
+            var breakdownHTML = "";
+            var T1 = 20000;
+            var T2 = 50000;
+
             if (cat === 'landers') {
-                const spaceT1 = Math.max(0, T1 - C);
-                const portionT1 = Math.min(A, spaceT1);
-                const ptsT1 = portionT1 * 0.03;
+                var spaceT1 = Math.max(0, T1 - C);
+                var portionT1 = Math.min(A, spaceT1);
+                var ptsT1 = portionT1 * 0.03;
                 points += ptsT1;
                 if (portionT1 > 0) breakdownHTML += '<span class="text-emerald-400">' + formatCurrency(portionT1) + ' @ 3%</span> = ' + ptsT1.toFixed(2) + ' pts<br>';
-                const spaceT2 = Math.max(0, T2 - C);
-                const portionT2 = Math.min(A, spaceT2);
-                const ptsT2 = portionT2 * 0.04;
+                var spaceT2 = Math.max(0, T2 - C);
+                var portionT2 = Math.min(A, spaceT2);
+                var ptsT2 = portionT2 * 0.04;
                 points += ptsT2;
                 if (portionT2 > 0) breakdownHTML += '<span class="text-yellow-400">' + formatCurrency(portionT2) + ' @ 4%</span> = ' + ptsT2.toFixed(2) + ' pts<br>';
-                const amountInT3 = Math.min(C + A, T2) - Math.max(C, T2);
-                const ptsT3 = amountInT3 * 0.05;
+                var amountInT3 = Math.min(C + A, T2) - Math.max(C, T2);
+                var ptsT3 = amountInT3 * 0.05;
                 points += ptsT3;
                 if (amountInT3 > 0) breakdownHTML += '<span class="text-purple-400">' + formatCurrency(amountInT3) + ' @ 5%</span> = ' + ptsT3.toFixed(2) + ' pts<br>';
-                if(breakdownHTML === "") breakdownHTML = "No points earned (0 amount).";
+                if (breakdownHTML === "") breakdownHTML = "No points earned (0 amount).";
             } else if (cat === 'dining') {
                 points = A * 0.02;
                 breakdownHTML = 'Flat Rate 2% on ' + formatCurrency(A) + ' <br> = ' + points.toFixed(2) + ' pts';
@@ -517,29 +509,31 @@
                 points = 0;
                 breakdownHTML = 'Excluded Category (0%)';
             } else if (cat === 'custom') {
-                let customVal = parseFloat(lCustomInput.value) || 0;
+                var customVal = parseFloat(lCustomInput.value) || 0;
                 points = A * (customVal / 100);
                 breakdownHTML = 'Custom Rate ' + customVal + '% on ' + formatCurrency(A) + ' <br> = ' + points.toFixed(2) + ' pts';
             }
-            const vouchers = Math.floor(points / 500);
+            var vouchers = Math.floor(points / 500);
             document.getElementById('landers-result').textContent = points.toFixed(2);
             document.getElementById('voucher-result').textContent = vouchers.toLocaleString();
             document.getElementById('tier-breakdown').innerHTML = breakdownHTML;
         }
-        [lSpend, lTotal, lCat, lCustomInput].forEach(el => {
-            el.addEventListener('calculate', calcLantern);
-            el.addEventListener('input', calcLantern);
-        });
-        lCat.addEventListener('change', () => {
+        lSpend.addEventListener('calculate', calcLantern);
+        lSpend.addEventListener('input', calcLantern);
+        lTotal.addEventListener('calculate', calcLantern);
+        lCat.addEventListener('calculate', calcLantern);
+        lCustomInput.addEventListener('calculate', calcLantern);
+        lCustomInput.addEventListener('input', calcLantern);
+        lCat.addEventListener('change', function() {
             if(lCat.value === 'custom') { lCustomGroup.classList.remove('hidden'); lCustomInput.focus(); }
             else { lCustomGroup.classList.add('hidden'); }
             calcLantern();
         });
 
-        // --- MAYA AI ASSISTANT (GROQ) ---
-        const GROQ_API_KEY = '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';
+        // --- MAYA AI ASSISTANT ---
+        var GROQ_API_KEY = 'gsk_your_api_key_here';
 
-        const MAYA_SYSTEM_PROMPT = 'You are the Maya Credit Card AI Assistant. You ONLY answer questions about the Maya Black Credit Card and the Maya Landers Credit Card (including the Landers Cashback Everywhere promo and T&Cs). Nothing else.\n\nRESPONSE STYLE — CRITICAL:\n- Keep responses SHORT and CONCISE. Max 4-6 bullet points or 3-4 short sentences unless the user explicitly asks for full details.\n- Do NOT dump walls of text. Agents need quick answers, not essays.\n- If a question is simple (e.g. "what\'s the annual fee?"), answer in ONE sentence.\n- If a question is complex, give a brief summary first, then offer to elaborate if needed.\n- Never list more than 6 items in a single response.\n- Cut out filler phrases like "Here are the details you asked about" or "Great question!"\n\nSCOPE:\n- Maya Black Credit Card (mayabank.ph/creditcard/mayablack/)\n- Maya Landers Credit Card (mayabank.ph/creditcard/landers/)\n- Landers Cashback Everywhere Promo\n- Credit Card T&Cs (MAD, finance charges, payments, fees, credit limits, eSOA, lost card, etc.)\n\nKEY FACTS — MAYA BLACK:\n- Premium real credit card by Maya Bank (not prepaid/debit)\n- Lounge access, dining perks, higher credit limits, elevated cashback\n- Annual fee (waivable with spend), 0% installments, reduced forex fees\n- Managed via Maya app. Apply in-app or at mayabank.ph\n\nKEY FACTS — MAYA LANDERS:\n- Co-branded credit card: Maya Bank + Landers Superstore\n- Official name: Landers Cashback Everywhere Credit Card by Maya\n- Earn points on ALL spends, accelerated at Landers stores\n- 500 points = 1 voucher (P500), redeemed at Landers in-store only\n- Requires active Landers membership to credit points\n\nCASHBACK EVERYWHERE PROMO (until Sept 30, 2025):\n- Progressive tiers based on ALL accumulated CC spend per month:\n  Tier 1: P0-20K = 3% on Landers store spends\n  Tier 2: >P20K-50K = 4% on Landers store spends\n  Tier 3: >P50K = 5% on Landers store spends\n- Tiers are SUCCESSIVE — must fill each one to progress\n- Example: P60K at Landers = P20K@3%(600) + P30K@4%(1,200) + P10K@5%(500) = 2,300 pts\n- 2% on dining, 1% on other retail (no minimum)\n- EXCLUDED (0%): Petrol, wallet top-up, cash advance, non-Landers supermarkets, casinos, pharma, government, utilities, telco, blacklisted cats\n- 1 pt = P1. Points rounded to 2 decimals. Counter resets per voucher.\n- Vouchers: non-transferable, non-cash-convertible, valid 60 days after promo ends\n- Redeem: Maya app > Cards > Credit Card > Rewards > Claim > show code at cashier\n- Qualifying spend: posts when transaction posts, resets 1st of each month\n- Annual rewards cap: P200,000 (Jan-Dec). Principal + supp = 1 customer. Excess forfeited.\n- Disqualifications: merchant/business accounts, duplicates, blacklisted, fraud, refunded txns. Maya can clawback.\n\nMAD CALCULATION:\n- TAD <= P500 > MAD = TAD\n- TAD > P500 > MAD = 3% of (TAD - new purchases - new cash advances - adjustments)\n  - If <P500 > MAD = P500 + past due\n  - If >=P500 > MAD = computed + past due\n\nFINANCE CHARGES:\n- Applies if unpaid or late. Purchases: from day after statement date. Cash advance: from posting date.\n- Daily interest = daily balance x (monthly rate / 30)\n\nMISSED PAYMENT CONSEQUENCES:\n- 30 days unpaid > card auto-locked\n- 90 days unpaid > card auto-suspended\n- Maya can auto-deduct MAD/TAD from Maya Wallet, Savings, other accounts\n\nPAYMENT ORDER: Cash advance fees > Penalty fees > Other fees > Annual fees > Interest > Cash advances > Installments > Purchases\n\neSOA: 30-day dispute window. After that, all transactions final. Pay uncontested amounts regardless.\nLOST CARD: Report immediately via app. Liable until reported. Replacement fee applies.\nCOOLING-OFF: 2 banking days from approval. Cancel if no outstanding balance.\nSUPPLEMENTARY: Shared limit. Joint and solidary liability with principal.\nFOREIGN TXN FEE: Applies to foreign currency txns and PHP txns by foreign acquirers.\n\nDISTINCTIONS:\n- Maya app virtual/physical card = PREPAID (not CC) > decline\n- Maya Personal Loan, Savings, Wallet, Crypto = separate products > decline\n- Landers Superstore membership card (non-CC) = not Maya product > clarify difference only\n\nREFUSAL:\n- Non-Maya topics > "I can only assist with questions about the Maya Black Credit Card and Maya Landers Credit Card. I\'m unable to help with that topic."\n- Other Maya products > "I can only assist with questions about the Maya Black Credit Card and Maya Landers Credit Card. For other Maya products, please check the Maya app or mayabank.ph."\n\nFORMAT: Bold key terms with **. Bullet points. Same language as user (EN/TL). Note fees may change — check app for latest.';
+        var MAYA_SYSTEM_PROMPT = 'You are the Maya Credit Card AI Assistant. You ONLY answer questions about the Maya Black Credit Card and the Maya Landers Credit Card (including the Landers Cashback Everywhere promo and T&Cs). Nothing else.\n\nRESPONSE STYLE — CRITICAL:\n- Keep responses SHORT and CONCISE. Max 4-6 bullet points or 3-4 short sentences unless the user explicitly asks for full details.\n- Do NOT dump walls of text. Agents need quick answers, not essays.\n- If a question is simple (e.g. "what\'s the annual fee?"), answer in ONE sentence.\n- If a question is complex, give a brief summary first, then offer to elaborate if needed.\n- Never list more than 6 items in a single response.\n- Cut out filler phrases like "Here are the details you asked about" or "Great question!"\n\nSCOPE:\n- Maya Black Credit Card (mayabank.ph/creditcard/mayablack/)\n- Maya Landers Credit Card (mayabank.ph/creditcard/landers/)\n- Landers Cashback Everywhere Promo\n- Credit Card T&Cs (MAD, finance charges, payments, fees, credit limits, eSOA, lost card, etc.)\n\nKEY FACTS — MAYA BLACK:\n- Premium real credit card by Maya Bank (not prepaid/debit)\n- Lounge access, dining perks, higher credit limits, elevated cashback\n- Annual fee (waivable with spend), 0% installments, reduced forex fees\n- Managed via Maya app. Apply in-app or at mayabank.ph\n\nKEY FACTS — MAYA LANDERS:\n- Co-branded credit card: Maya Bank + Landers Superstore\n- Official name: Landers Cashback Everywhere Credit Card by Maya\n- Earn points on ALL spends, accelerated at Landers stores\n- 500 points = 1 voucher (P500), redeemed at Landers in-store only\n- Requires active Landers membership to credit points\n\nCASHBACK EVERYWHERE PROMO (until Sept 30, 2025):\n- Progressive tiers based on ALL accumulated CC spend per month:\n  Tier 1: P0-20K = 3% on Landers store spends\n  Tier 2: >P20K-50K = 4% on Landers store spends\n  Tier 3: >P50K = 5% on Landers store spends\n- Tiers are SUCCESSIVE — must fill each one to progress\n- Example: P60K at Landers = P20K@3%(600) + P30K@4%(1,200) + P10K@5%(500) = 2,300 pts\n- 2% on dining, 1% on other retail (no minimum)\n- EXCLUDED (0%): Petrol, wallet top-up, cash advance, non-Landers supermarkets, casinos, pharma, government, utilities, telco, blacklisted cats\n- 1 pt = P1. Points rounded to 2 decimals. Counter resets per voucher.\n- Vouchers: non-transferable, non-cash-convertible, valid 60 days after promo ends\n- Redeem: Maya app > Cards > Credit Card > Rewards > Claim > show code at cashier\n- Qualifying spend: posts when transaction posts, resets 1st of each month\n- Annual rewards cap: P200,000 (Jan-Dec). Principal + supp = 1 customer. Excess forfeited.\n- Disqualifications: merchant/business accounts, duplicates, blacklisted, fraud, refunded txns. Maya can clawback.\n\nMAD CALCULATION:\n- TAD <= P500 > MAD = TAD\n- TAD > P500 > MAD = 3% of (TAD - new purchases - new cash advances - adjustments)\n  - If <P500 > MAD = P500 + past due\n  - If >=P500 > MAD = computed + past due\n\nFINANCE CHARGES:\n- Applies if unpaid or late. Purchases: from day after statement date. Cash advance: from posting date.\n- Daily interest = daily balance x (monthly rate / 30)\n\nMISSED PAYMENT CONSEQUENCES:\n- 30 days unpaid > card auto-locked\n- 90 days unpaid > card auto-suspended\n- Maya can auto-deduct MAD/TAD from Maya Wallet, Savings, other accounts\n\nPAYMENT ORDER: Cash advance fees > Penalty fees > Other fees > Annual fees > Interest > Cash advances > Installments > Purchases\n\neSOA: 30-day dispute window. After that, all transactions final. Pay uncontested amounts regardless.\nLOST CARD: Report immediately via app. Liable until reported. Replacement fee applies.\nCOOLING-OFF: 2 banking days from approval. Cancel if no outstanding balance.\nSUPPLEMENTARY: Shared limit. Joint and solidary liability with principal.\nFOREIGN TXN FEE: Applies to foreign currency txns and PHP txns by foreign acquirers.\n\nDISTINCTIONS:\n- Maya app virtual/physical card = PREPAID (not CC) > decline\n- Maya Personal Loan, Savings, Wallet, Crypto = separate products > decline\n- Landers Superstore membership card (non-CC) = not Maya product > clarify difference only\n\nREFUSAL:\n- Non-Maya topics > "I can only assist with questions about the Maya Black Credit Card and Maya Landers Credit Card. I\'m unable to help with that topic."\n- Other Maya products > "I can only assist with questions about the Maya Black Credit Card and Maya Landers Credit Card. For other Maya products, please check the Maya app or mayabank.ph."\n\nFORMAT: Bold key terms with **. Bullet points. Same language as user (EN/TL). Note fees may change — check app for latest.';
 
         var mayaChatHistory = [
             { role: 'system', content: MAYA_SYSTEM_PROMPT },
@@ -549,39 +543,54 @@
 
         function getMayaChat() { return document.getElementById('maya-chat'); }
         function getMayaInput() { return document.getElementById('maya-input'); }
-        function scrollMayaChat() { var chat = getMayaChat(); chat.scrollTop = chat.scrollHeight; }
+        function scrollMayaChat() { var c = getMayaChat(); c.scrollTop = c.scrollHeight; }
 
-        // Helper to create a mayagreenlogo.png avatar element
-        function makemayagreenlogo.pngAvatar(size) {
+        function makeLogoAvatar() {
             var wrap = document.createElement('div');
             wrap.className = 'w-7 h-7 rounded-lg bg-violet-500/20 border border-violet-500/30 flex items-center justify-center shrink-0 mt-0.5 overflow-hidden';
             var img = document.createElement('img');
-            img.src = 'mayamayagreenlogo.png.png';
+            img.src = 'mayalogo.png';
             img.alt = '';
-            img.className = 'chat-mayagreenlogo.png';
+            img.className = 'chat-logo';
             img.onerror = function() {
                 this.style.display = 'none';
-                var fb = this.nextElementSibling;
-                if (fb) fb.style.display = 'flex';
+                this.nextElementSibling.style.display = 'flex';
             };
             wrap.appendChild(img);
             var fb = document.createElement('div');
-            fb.className = 'mayagreenlogo.png-fallback hidden w-5 h-5 rounded bg-violet-600/20 border border-violet-500/30 text-[10px]';
+            fb.className = 'logo-fallback hidden w-5 h-5 rounded bg-violet-600/20 border border-violet-500/30 text-[10px]';
             fb.textContent = 'M';
             wrap.appendChild(fb);
             return wrap;
         }
 
-        function addMayaMessage(role, content) {
-            var chat = getMayaChat();
+        function createMsgBubble(role, html) {
             var wrapper = document.createElement('div');
             wrapper.className = 'flex gap-3 animate-fade-in';
             if (role === 'user') {
-                wrapper.innerHTML = '<div class="ml-auto max-w-[85%]"><div class="bg-violet-600/20 border border-violet-500/20 rounded-xl rounded-tr-sm px-4 py-3"><p class="text-xs text-zinc-200 leading-relaxed">' + escapeHtml(content) + '</p></div></div><div class="w-7 h-7 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0 mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-zinc-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg></div>';
+                var userBubble = document.createElement('div');
+                userBubble.className = 'ml-auto max-w-[85%]';
+                userBubble.innerHTML = '<div class="bg-violet-600/20 border border-violet-500/20 rounded-xl rounded-tr-sm px-4 py-3"><p class="text-xs text-zinc-200 leading-relaxed"></p></div>';
+                userBubble.firstChild.firstChild.textContent = html;
+                wrapper.appendChild(userBubble);
+                var userIcon = document.createElement('div');
+                userIcon.className = 'w-7 h-7 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center shrink-0 mt-0.5';
+                userIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-zinc-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>';
+                wrapper.appendChild(userIcon);
             } else {
-                wrapper.appendChild(makemayagreenlogo.pngAvatar());
-                wrapper.innerHTML += '<div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3 max-w-[85%]"><div class="text-xs text-zinc-300 leading-relaxed maya-response-text">' + formatMayaResponse(content) + '</div></div>';
+                wrapper.appendChild(makeLogoAvatar());
+                var aiBubble = document.createElement('div');
+                aiBubble.className = 'bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3 max-w-[85%]';
+                aiBubble.innerHTML = '<div class="text-xs text-zinc-300 leading-relaxed maya-response-text"></div>';
+                aiBubble.firstChild.innerHTML = html;
+                wrapper.appendChild(aiBubble);
             }
+            return wrapper;
+        }
+
+        function addMayaMessage(role, content) {
+            var chat = getMayaChat();
+            var wrapper = createMsgBubble(role, content);
             chat.appendChild(wrapper);
             scrollMayaChat();
         }
@@ -591,15 +600,21 @@
             var wrapper = document.createElement('div');
             wrapper.className = 'flex gap-3 animate-fade-in';
             wrapper.id = 'maya-typing';
-            var avatar = makemayagreenlogo.pngAvatar();
+            var avatar = makeLogoAvatar();
             avatar.querySelector('img').style.opacity = '0.5';
             wrapper.appendChild(avatar);
-            wrapper.innerHTML += '<div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3"><div class="flex items-center gap-1.5 h-4"><div class="w-1.5 h-1.5 bg-violet-400 rounded-full typing-dot"></div><div class="w-1.5 h-1.5 bg-violet-400 rounded-full typing-dot"></div><div class="w-1.5 h-1.5 bg-violet-400 rounded-full typing-dot"></div></div></div>';
+            var dots = document.createElement('div');
+            dots.className = 'bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3';
+            dots.innerHTML = '<div class="flex items-center gap-1.5 h-4"><div class="w-1.5 h-1.5 bg-violet-400 rounded-full typing-dot"></div><div class="w-1.5 h-1.5 bg-violet-400 rounded-full typing-dot"></div><div class="w-1.5 h-1.5 bg-violet-400 rounded-full typing-dot"></div></div>';
+            wrapper.appendChild(dots);
             chat.appendChild(wrapper);
             scrollMayaChat();
         }
 
-        function removeMayaTypingIndicator() { var el = document.getElementById('maya-typing'); if (el) el.remove(); }
+        function removeMayaTypingIndicator() {
+            var el = document.getElementById('maya-typing');
+            if (el) el.remove();
+        }
 
         function addMayaError(message) {
             var chat = getMayaChat();
@@ -610,7 +625,12 @@
             scrollMayaChat();
         }
 
-        function escapeHtml(str) { var div = document.createElement('div'); div.textContent = str; return div.innerHTML; }
+        function escapeHtml(str) {
+            var div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         function formatMayaResponse(text) {
             var formatted = escapeHtml(text);
             formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong class="text-violet-300">$1</strong>');
@@ -631,10 +651,7 @@
         window.clearMayaChat = function() {
             var chat = getMayaChat();
             chat.innerHTML = '';
-            var wrapper = document.createElement('div');
-            wrapper.className = 'flex gap-3 animate-fade-in';
-            wrapper.appendChild(makemayagreenlogo.pngAvatar());
-            wrapper.innerHTML += '<div class="bg-zinc-900/80 border border-zinc-800 rounded-xl rounded-tl-sm px-4 py-3 max-w-[85%]"><p class="text-xs text-zinc-300 leading-relaxed">Hello! I\'m the <strong class="text-violet-400">Maya Credit Card AI</strong>. I handle **Maya Black CC** and **Maya Landers CC** questions — features, promo mechanics, fees, payments. Keep it brief and I\'ll do the same. What do you need?</p></div>';
+            var wrapper = createMsgBubble('assistant', 'Hello! I\'m the <strong class="text-violet-400">Maya Credit Card AI</strong>. I handle **Maya Black CC** and **Maya Landers CC** questions — features, promo mechanics, fees, payments. Keep it brief and I\'ll do the same. What do you need?');
             chat.appendChild(wrapper);
             mayaChatHistory = [
                 { role: 'system', content: MAYA_SYSTEM_PROMPT },
@@ -645,8 +662,9 @@
 
         window.sendMayaQuick = function(text) { getMayaInput().value = text; sendMayaMessage(); };
 
-        function sendMayaMessage() {
+        async function sendMayaMessage() {
             if (mayaIsProcessing) return;
+
             var input = getMayaInput();
             var message = input.value.trim();
             if (!message) return;
@@ -664,42 +682,50 @@
             setMayaProcessing(true);
             addMayaTypingIndicator();
 
-            fetch('https://api.groq.com/openai/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + GROQ_API_KEY,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    model: 'groq/compound',
-                    messages: mayaChatHistory,
-                    temperature: 0.3,
-                    max_tokens: 400,
-                    top_p: 0.9
-                })
-            }).then(function(response) {
+            try {
+                var response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + GROQ_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'groq/compound',
+                        messages: mayaChatHistory,
+                        temperature: 0.3,
+                        max_tokens: 400,
+                        top_p: 0.9
+                    })
+                });
+
                 removeMayaTypingIndicator();
+
                 if (!response.ok) {
-                    return response.json().catch(function() { return {}; }).then(function(errorData) {
-                        if (response.status === 401) addMayaError('Invalid API key. Please check your Groq API key.');
-                        else if (response.status === 429) addMayaError('Rate limit reached. Please wait a moment.');
-                        else addMayaError('API Error (' + response.status + '): ' + (errorData.error && errorData.error.message ? errorData.error.message : 'Unknown error.'));
-                        mayaChatHistory.pop();
-                        setMayaProcessing(false);
-                    });
+                    var errorData = {};
+                    try { errorData = await response.json(); } catch(e) {}
+                    var errorMsg = 'Unknown error occurred.';
+                    if (errorData && errorData.error && errorData.error.message) errorMsg = errorData.error.message;
+                    else if (response.status === 401) errorMsg = 'Invalid API key. Please check your Groq API key.';
+                    else if (response.status === 429) errorMsg = 'Rate limit reached. Please wait a moment.';
+                    else errorMsg = 'API Error (' + response.status + '): ' + errorMsg;
+                    addMayaError(errorMsg);
+                    mayaChatHistory.pop();
+                    setMayaProcessing(false);
+                    return;
                 }
-                return response.json();
-            }).then(function(data) {
+
+                var data = await response.json();
                 var assistantMessage = data.choices[0].message.content;
                 mayaChatHistory.push({ role: 'assistant', content: assistantMessage });
                 addMayaMessage('assistant', assistantMessage);
-                setMayaProcessing(false);
-            }).catch(function(err) {
+
+            } catch (err) {
                 removeMayaTypingIndicator();
                 addMayaError('Network error — unable to reach Groq API.');
                 mayaChatHistory.pop();
-                setMayaProcessing(false);
-            });
+            }
+
+            setMayaProcessing(false);
         }
     </script>
 </body>
