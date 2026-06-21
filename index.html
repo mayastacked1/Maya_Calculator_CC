@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maya | Utility Terminal</title>
-    <link rel="icon" type="image/png" href="logo.png" onerror="this.href='logo.png'">
+    <link rel="icon" type="image/png" href="logo.png" onerror="this.href='mayalogo(1).png'">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -228,7 +228,7 @@
                 <label class="block text-[10px] uppercase tracking-wider text-red-500/80 mb-1">Total Payable Amount</label>
                 <div class="flex items-baseline gap-2 group cursor-pointer" onclick="copyToClipboard('finance-charge-result')">
                     <p class="text-3xl font-mono font-bold text-white group-hover:text-red-400 transition-colors data-font">₱<span id="finance-charge-result">0.00</span></p>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-zinc-600 group-hover:text-zinc-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-zinc-600 group-hover:text-zinc-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002 2v-1M8 5a2 2 0 002 2h2a2 2 0 012 2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
                 </div>
             </div>
         </div>
@@ -275,8 +275,8 @@
                         <label class="block text-[10px] uppercase tracking-wider text-orange-400 mb-1">Custom Rate Override</label>
                         <div class="relative">
                             <input type="number" step="0.1" id="landers-custom-rate" placeholder="0.0" class="w-full bg-zinc-950/50 border border-orange-500/30 rounded-lg py-2 px-3 text-orange-400 font-mono text-sm focus:outline-none focus:ring-1 focus:ring-orange-500/50 transition-all">
-                            <span class="absolute right-3 top-2.5 text-zinc-500 text-sm">%</span>
-                        </div>
+                                <span class="absolute right-3 top-2.5 text-zinc-500 text-sm">%</span>
+                            </div>
                         <p class="text-[9px] text-zinc-600 mt-1">*Overrides automatic tiering.</p>
                     </div>
                 </div>
@@ -285,7 +285,7 @@
                     <p id="tier-breakdown" class="text-xs font-mono text-zinc-300 leading-relaxed min-h-[1.5em]">Waiting for input...</p>
                 </div>
             </div>
-            <div class="md:w-1/2 bg-zinc-900/30 rounded-xl p-6 flex flex-col justify-center border border-dashed border-zinc-800 relative">
+            <div class="md:w-1/2 bg-zinc-900/30 rounded-xl p-6 flex flex-col justify-center border border border-dashed border-zinc-800 relative">
                 <p class="text-xs uppercase tracking-widest text-zinc-500 mb-4">Points Earned</p>
                 <div class="flex items-end justify-between mb-4">
                     <p class="text-4xl md:text-5xl font-mono font-bold text-blue-400 tracking-tighter data-font group cursor-pointer" onclick="copyToClipboard('landers-result')">
@@ -366,6 +366,7 @@
     </div>
 
     <script>
+        // --- UTILS ---
         var formatCurrency = function(num) {
             return new Intl.NumberFormat('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
         };
@@ -386,19 +387,18 @@
             });
             el.addEventListener('input', function() { el.dispatchEvent(new Event('calculate')); });
         };
-
         function showToast(msg) {
             var toast = document.getElementById('toast');
             document.getElementById('toast-message').innerText = msg || "Value Copied";
             toast.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
             setTimeout(function() { toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none'); }, 2000);
         }
-
         window.copyToClipboard = function(elementId) {
             var text = document.getElementById(elementId).innerText || document.getElementById(elementId).value;
             navigator.clipboard.writeText(text).then(function() { showToast("Value Copied"); });
         };
 
+        // --- CLOCK ---
         function updateClock() {
             var now = new Date();
             document.getElementById('live-date-time').textContent = now.toLocaleString('en-US', { 
@@ -409,6 +409,7 @@
         setInterval(updateClock, 1000); 
         updateClock();
 
+        // --- LOADER ---
         function hideLoader() {
             var el = document.getElementById('loader');
             if (el) el.classList.add('hidden-loader');
@@ -422,7 +423,6 @@
         var customMult = document.getElementById('custom-multiplier');
         var milesInput = document.getElementById('miles-input');
         setupCurrencyInput('spend-input');
-
         function calculateMiles() {
             var val = parseCurrency(spendInput.value);
             var isCustom = multSelect.value === 'custom';
@@ -444,7 +444,6 @@
         // --- FINANCE CALCULATOR ---
         setupCurrencyInput('loan-credit');
         setupCurrencyInput('partial-payment');
-
         function calcFinance() {
             var loan = parseCurrency(document.getElementById('loan-credit').value);
             var partial = parseCurrency(document.getElementById('partial-payment').value);
@@ -467,13 +466,11 @@
         // --- LANTERN CALCULATOR ---
         setupCurrencyInput('landers-spend');
         setupCurrencyInput('total-card-spend');
-
         var lSpend = document.getElementById('landers-spend');
         var lTotal = document.getElementById('total-card-spend');
         var lCat = document.getElementById('landers-category');
         var lCustomInput = document.getElementById('landers-custom-rate');
         var lCustomGroup = document.getElementById('landers-custom-group');
-
         function calcLantern() {
             var A = parseCurrency(lSpend.value);
             var C = parseCurrency(lTotal.value);
@@ -482,7 +479,6 @@
             var breakdownHTML = "";
             var T1 = 20000;
             var T2 = 50000;
-
             if (cat === 'landers') {
                 var spaceT1 = Math.max(0, T1 - C);
                 var portionT1 = Math.min(A, spaceT1);
@@ -533,13 +529,14 @@
         // --- MAYA AI ASSISTANT ---
         var GROQ_API_KEY = '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';
 
-        var MAYA_SYSTEM_PROMPT = 'You are the Maya Credit Card AI Assistant. You ONLY answer questions about the Maya Black Credit Card and the Maya Landers Credit Card (including the Landers Cashback Everywhere promo and T&Cs). Nothing else.\n\nRESPONSE STYLE — CRITICAL:\n- Keep responses SHORT and CONCISE. Max 4-6 bullet points or 3-4 short sentences unless the user explicitly asks for full details.\n- Do NOT dump walls of text. Agents need quick answers, not essays.\n- If a question is simple (e.g. "what\'s the annual fee?"), answer in ONE sentence.\n- If a question is complex, give a brief summary first, then offer to elaborate if needed.\n- Never list more than 6 items in a single response.\n- Cut out filler phrases like "Here are the details you asked about" or "Great question!"\n\nSCOPE:\n- Maya Black Credit Card (mayabank.ph/creditcard/mayablack/)\n- Maya Landers Credit Card (mayabank.ph/creditcard/landers/)\n- Landers Cashback Everywhere Promo\n- Credit Card T&Cs (MAD, finance charges, payments, fees, credit limits, eSOA, lost card, etc.)\n\nKEY FACTS — MAYA BLACK:\n- Premium real credit card by Maya Bank (not prepaid/debit)\n- Lounge access, dining perks, higher credit limits, elevated cashback\n- Annual fee (waivable with spend), 0% installments, reduced forex fees\n- Managed via Maya app. Apply in-app or at mayabank.ph\n\nKEY FACTS — MAYA LANDERS:\n- Co-branded credit card: Maya Bank + Landers Superstore\n- Official name: Landers Cashback Everywhere Credit Card by Maya\n- Earn points on ALL spends, accelerated at Landers stores\n- 500 points = 1 voucher (P500), redeemed at Landers in-store only\n- Requires active Landers membership to credit points\n\nCASHBACK EVERYWHERE PROMO (until Sept 30, 2025):\n- Progressive tiers based on ALL accumulated CC spend per month:\n  Tier 1: P0-20K = 3% on Landers store spends\n  Tier 2: >P20K-50K = 4% on Landers store spends\n  Tier 3: >P50K = 5% on Landers store spends\n- Tiers are SUCCESSIVE — must fill each one to progress\n- Example: P60K at Landers = P20K@3%(600) + P30K@4%(1,200) + P10K@5%(500) = 2,300 pts\n- 2% on dining, 1% on other retail (no minimum)\n- EXCLUDED (0%): Petrol, wallet top-up, cash advance, non-Landers supermarkets, casinos, pharma, government, utilities, telco, blacklisted cats\n- 1 pt = P1. Points rounded to 2 decimals. Counter resets per voucher.\n- Vouchers: non-transferable, non-cash-convertible, valid 60 days after promo ends\n- Redeem: Maya app > Cards > Credit Card > Rewards > Claim > show code at cashier\n- Qualifying spend: posts when transaction posts, resets 1st of each month\n- Annual rewards cap: P200,000 (Jan-Dec). Principal + supp = 1 customer. Excess forfeited.\n- Disqualifications: merchant/business accounts, duplicates, blacklisted, fraud, refunded txns. Maya can clawback.\n\nMAD CALCULATION:\n- TAD <= P500 > MAD = TAD\n- TAD > P500 > MAD = 3% of (TAD - new purchases - new cash advances - adjustments)\n  - If <P500 > MAD = P500 + past due\n  - If >=P500 > MAD = computed + past due\n\nFINANCE CHARGES:\n- Applies if unpaid or late. Purchases: from day after statement date. Cash advance: from posting date.\n- Daily interest = daily balance x (monthly rate / 30)\n\nMISSED PAYMENT CONSEQUENCES:\n- 30 days unpaid > card auto-locked\n- 90 days unpaid > card auto-suspended\n- Maya can auto-deduct MAD/TAD from Maya Wallet, Savings, other accounts\n\nPAYMENT ORDER: Cash advance fees > Penalty fees > Other fees > Annual fees > Interest > Cash advances > Installments > Purchases\n\neSOA: 30-day dispute window. After that, all transactions final. Pay uncontested amounts regardless.\nLOST CARD: Report immediately via app. Liable until reported. Replacement fee applies.\nCOOLING-OFF: 2 banking days from approval. Cancel if no outstanding balance.\nSUPPLEMENTARY: Shared limit. Joint and solidary liability with principal.\nFOREIGN TXN FEE: Applies to foreign currency txns and PHP txns by foreign acquirers.\n\nDISTINCTIONS:\n- Maya app virtual/physical card = PREPAID (not CC) > decline\n- Maya Personal Loan, Savings, Wallet, Crypto = separate products > decline\n- Landers Superstore membership card (non-CC) = not Maya product > clarify difference only\n\nREFUSAL:\n- Non-Maya topics > "I can only assist with questions about the Maya Black Credit Card and Maya Landers Credit Card. I\'m unable to help with that topic."\n- Other Maya products > "I can only assist with questions about the Maya Black Credit Card and Maya Landers Credit Card. For other Maya products, please check the Maya app or mayabank.ph."\n\nFORMAT: Bold key terms with **. Bullet points. Same language as user (EN/TL). Note fees may change — check app for latest.';
+        var MAYA_SYSTEM_PROMPT = 'You are the Maya Credit Card AI Assistant. You ONLY answer questions about the Maya Black Credit Card and the Maya Landers Credit Card (including the Landers Cashback Everywhere promo and T&Cs). Nothing else.\n\nRESPONSE STYLE — CRITICAL:\n- Keep responses SHORT and CONCISE. Max 4-6 bullet points or 3-4 short sentences unless the user explicitly asks for full details.\n- Do NOT dump walls of text. Agents need quick answers, not essays.\n- If a question is simple (e.g. "what\'s the annual fee?"), answer in ONE sentence.\n- If a question is complex, give a brief summary first, then offer to elaborate if needed.\n- Never list more than 6 items in a single response.\n- Cut out filler phrases like "Here are the details you asked about" or "Great question!"\n\nSCOPE:\n- Maya Black Credit Card (mayabank.ph/creditcard/mayablack/)\n- Maya Landers Credit Card (mayabank.ph/creditcard/landers/)\n- Landers Cashback Everywhere Promo\n- Credit Card T&Cs (MAD, finance charges, payments, fees, credit limits, eSOA, lost card, etc.)\n\nKEY FACTS — MAYA BLACK:\n- Premium real credit card by Maya Bank (not prepaid/debit)\n- Lounge access, dining perks, higher credit limits, elevated cashback\n- Annual fee (waivable with spend), 0% installments, reduced forex fees\n- Managed via Maya app. Apply in-app or at mayabank.ph\n\nKEY FACTS — MAYA LANDERS:\n- Co-branded credit card: Maya Bank + Landers Superstore\n- Official name: Landers Cashback Everywhere Credit Card by Maya\n- Earn points on ALL spends, accelerated at Landers stores\n- 500 points = 1 voucher (P500), redeemed at Landers in-store only\n- Requires active Landers membership to credit points\n\nCASHBACK EVERYWHERE PROMO (until Sept 30, 2025):\n- Progressive tiers based on ALL accumulated CC spend per month:\n  Tier 1: P0-20K = 3% on Landers store spends\n  Tier 2: >P20K-50K = 4% on Landers store spends\n  Tier 3: >P50K = 5% on Landers store spends\n- Tiers are SUCCESSIVE — must fill each one to progress\n- Example: P60K at Landers = P20K@3%(600) + P30K@4%(1,200) + P10K@5%(500) = 2,300 pts\n- 2% on dining, 1% on other retail (no minimum)\n- EXCLUDED (0%): Petrol, wallet top-up, cash advance, non-Landers supermarkets, casinos, pharma, government, utilities, telco, blacklisted cats\n- 1 pt = P1. Points rounded to 2 decimals. Counter resets per voucher.\n- Vouchers: non-transferable, non-cash-convertible, valid 60 days after promo ends\n- Redeem: Maya app > Cards > Credit Card > Rewards > Claim > show code at cashier\n- Qualifying spend: posts when transaction posts, resets 1st of each month\n- Annual rewards cap: P200,000 (Jan-Dec). Principal + supp = 1 customer. Excess forfeited.\n- Disqualifications: merchant/business accounts, duplicates, blacklisted, fraud, refunded txns. Maya can clawback.\n\nMAD CALCULATION:\n- TAD <= P500 > MAD = TAD\n- TAD > P500 > MAD = 3% of (TAD - new purchases - new cash advances - adjustments)\n  If <P500 > MAD = P500 + past due\n  If >=P500 > MAD = computed + past due\n\nFINANCE CHARGES:\n- Applies if unpaid or late. Purchases: from day after statement date. Cash advance: from posting date.\n- Daily interest = daily balance x (monthly rate / 30)\n\nMISSED PAYMENT CONSEQUENCES:\n- 30 days unpaid > card auto-locked\n- 90 days unpaid > card auto-suspended\n- Maya can auto-deduct MAD/TAD from Maya Wallet, Savings, other accounts\n\nPAYMENT ORDER: Cash advance fees > Penalty fees > Other fees > Annual fees > Interest > Cash advances > Installments > Purchases\n\neSOA: 30-day dispute window. After that, all transactions final. Pay uncontested amounts regardless.\nLOST CARD: Report immediately via app. Liable until reported. Replacement fee applies.\nCOOLING-OFF: 2 banking days from approval. Cancel if no outstanding balance.\nSUPPLEMENTARY: Shared limit. Joint and solidary liability with principal.\nFOREIGN TXN FEE: Applies to foreign currency txns and PHP txns by foreign acquirers.\n\nDISTINCTIONS:\n- Maya app virtual/physical card = PREPAID (not CC) > decline\n- Maya Personal Loan, Savings, Wallet, Crypto = separate products > decline\n- Landers Superstore membership card (non-CC) = not Maya product > clarify difference only\n\nREFUSAL:\n- Non-Maya topics > "I can only assist with questions about the Maya Black Credit Card and the Maya Landers Credit Card. I\'m unable to help with that topic."\n- Other Maya products > "I can only assist with questions about the Maya Black Credit Card and the Maya Landers Credit Card. For other Maya products, please check the Maya app or mayabank.ph."\n\nFORMAT: Bold key terms with **. Bullet points. Same language as user (EN/TL). Note fees may change — check app for latest.';
 
         var mayaChatHistory = [
             { role: 'system', content: MAYA_SYSTEM_PROMPT },
             { role: 'assistant', content: "Hello! I'm the Maya Credit Card AI. I handle Maya Black CC and Maya Landers CC questions — features, promo mechanics, fees, payments. Keep it brief and I'll do the same. What do you need?" }
         ];
         var mayaIsProcessing = false;
+        var mayaRetryTimer = null;
 
         function getMayaChat() { return document.getElementById('maya-chat'); }
         function getMayaInput() { return document.getElementById('maya-input'); }
@@ -616,6 +613,10 @@
             if (el) el.remove();
         }
 
+        function removeMayaRetryTimer() {
+            if (mayaRetryTimer) { clearTimeout(mayaRetryTimer); mayaRetryTimer = null; }
+        }
+
         function addMayaError(message) {
             var chat = getMayaChat();
             var wrapper = document.createElement('div');
@@ -681,6 +682,7 @@
             input.value = '';
             setMayaProcessing(true);
             addMayaTypingIndicator();
+            removeMayaRetryTimer();
 
             try {
                 var response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -703,11 +705,25 @@
                 if (!response.ok) {
                     var errorData = {};
                     try { errorData = await response.json(); } catch(e) {}
+
+                    // RATE LIMIT — friendly retry with auto-backoff
+                    if (response.status === 429) {
+                        var retryAfter = 6;
+                        removeMayaRetryTimer();
+                        addMayaMessage('assistant', 'The server is a bit busy right now. Retrying in ' + retryAfter + ' seconds...');
+                        mayaChatHistory.pop();
+                        setMayaProcessing(false);
+                        mayaRetryTimer = setTimeout(function() {
+                            sendMayaMessage();
+                        }, retryAfter * 1000);
+                        return;
+                    }
+
                     var errorMsg = 'Unknown error occurred.';
                     if (errorData && errorData.error && errorData.error.message) errorMsg = errorData.error.message;
                     else if (response.status === 401) errorMsg = 'Invalid API key. Please check your Groq API key.';
-                    else if (response.status === 429) errorMsg = 'Rate limit reached. Please wait a moment.';
                     else errorMsg = 'API Error (' + response.status + '): ' + errorMsg;
+                    
                     addMayaError(errorMsg);
                     mayaChatHistory.pop();
                     setMayaProcessing(false);
@@ -721,7 +737,7 @@
 
             } catch (err) {
                 removeMayaTypingIndicator();
-                addMayaError('Network error — unable to reach Groq API.');
+                addMayaError('Network error — unable to reach Groq API. Please check your connection.');
                 mayaChatHistory.pop();
             }
 
