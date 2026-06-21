@@ -327,7 +327,7 @@
             </div>
             <div class="flex flex-wrap gap-2 mb-4">
                 <button onclick="sendMayaQuick('What is the Maya Black Credit Card?')" class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-violet-500/30 text-zinc-400 hover:text-violet-300 text-[10px] rounded-full transition-all">Maya Black</button>
-                <button onclick="sendMayaQuick('Maya Black vs Maya Landers — which should I get?')" class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-violet-500/30 text-zinc-400 hover:text-violet-300 text-[10px] rounded-full transition-all">Black vs Landers</button>
+                <button onclick="sendMayaQuick('Maya Black vs Maya Landers - which should I get?')" class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-violet-500/30 text-zinc-400 hover:text-violet-300 text-[10px] rounded-full transition-all">Black vs Landers</button>
                 <button onclick="sendMayaQuick('How does the Landers Cashback Everywhere promo work?')" class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-violet-500/30 text-zinc-400 hover:text-violet-300 text-[10px] rounded-full transition-all">Cashback Promo</button>
                 <button onclick="sendMayaQuick('How do I calculate the Minimum Amount Due?')" class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-violet-500/30 text-zinc-400 hover:text-violet-300 text-[10px] rounded-full transition-all">MAD Calc</button>
                 <button onclick="sendMayaQuick('What are the excluded categories for cashback?')" class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-violet-500/30 text-zinc-400 hover:text-violet-300 text-[10px] rounded-full transition-all">Excluded Cats</button>
@@ -637,12 +637,10 @@
             formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong class="text-violet-300">$1</strong>');
             formatted = formatted.replace(/\n/g, '<br>');
             
-            // Replace standard hyphen bullet points at the start of a line
+            // Safely replace standard hyphen bullet points only at the start of a line
             formatted = formatted.replace(/(^|<br>)- /g, '$1<span class="text-violet-400 mr-1">•</span> ');
-            // Replace explicit unicode bullet points just in case
-            formatted = formatted.replace(/• /g, '<span class="text-violet-400 mr-1">•</span> ');
             
-            // Safely format numbered lists only at the start of lines to avoid breaking math (e.g. 0.03)
+            // Safely replace numbered lists only at the start of a line to avoid breaking math (e.g. 0.03 * 28,000)
             formatted = formatted.replace(/(^|<br>)(\d+)\.\s/g, '$1<span class="text-violet-400 mr-1">$2.</span> ');
             
             return formatted;
@@ -718,11 +716,11 @@
                     var errorData = {};
                     try { errorData = await response.json(); } catch(e) {}
 
-                    // RATE LIMIT — friendly retry with auto-backoff
+                    // RATE LIMIT — friendly toast retry with auto-backoff
                     if (response.status === 429) {
                         var retryAfter = 6;
                         removeMayaRetryTimer();
-                        addMayaMessage('assistant', 'The server is a bit busy right now. Retrying in ' + retryAfter + ' seconds...');
+                        showToast('Server busy. Retrying in 6 seconds...');
                         mayaChatHistory.pop();
                         setMayaProcessing(false);
                         mayaRetryTimer = setTimeout(function() {
